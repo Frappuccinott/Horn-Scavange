@@ -4,11 +4,10 @@ using UnityEngine.InputSystem;
 public class CharacterMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
-
     Rigidbody2D rb;
     Animator anim;
     Vector2 movement;
-
+    Vector2 lastMovement; // Son hareket yönünü sakla
     PlayerControls controls;
 
     void Awake()
@@ -23,14 +22,22 @@ public class CharacterMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        lastMovement = Vector2.down; // Başlangıç yönü (aşağı)
     }
 
     void Update()
     {
-        movement = controls.Player.Move.ReadValue<Vector2>().normalized;
+        movement = controls.Player.Move.ReadValue<Vector2>();
 
-        anim.SetFloat("moveX", movement.x);
-        anim.SetFloat("moveY", movement.y);
+        // Eğer hareket varsa, son hareketi güncelle
+        if (movement != Vector2.zero)
+        {
+            lastMovement = movement.normalized;
+        }
+
+        // Animator parametrelerini ayarla
+        anim.SetFloat("moveX", lastMovement.x);
+        anim.SetFloat("moveY", lastMovement.y);
         anim.SetFloat("speed", movement.sqrMagnitude);
     }
 
