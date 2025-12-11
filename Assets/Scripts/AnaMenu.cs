@@ -6,7 +6,12 @@ public class AnaMenu : MonoBehaviour
     public GameObject SettingsPanel;
     public GameObject CreditsPanel;
 
-    public void PLAY()
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    public void Play()
     {
         SceneManager.LoadScene("Game");
     }
@@ -30,7 +35,6 @@ public class AnaMenu : MonoBehaviour
     {
         CreditsPanel.SetActive(false);
     }
-
 
 }
    
