@@ -9,39 +9,46 @@ public class CharacterMovement : MonoBehaviour
     private float originalSpeed;
     private Rigidbody2D rb;
     private Animator anim;
+
     private Vector2 movement;
     private Vector2 lastMovement;
+
+    private const float deadZone = 0.1f;
 
     private void Awake()
     {
         originalSpeed = moveSpeed;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        lastMovement = Vector2.down;
+        lastMovement = Vector2.down; // başlangıç yönü
     }
 
     private void Update()
     {
         if (InputManager.controls == null) return;
 
-        // Read input
         movement = InputManager.controls.Character.Move.ReadValue<Vector2>();
 
-        // Track last non-zero direction for idle animations
-        if (movement != Vector2.zero)
-        {
-            lastMovement = movement.normalized;
-        }
+        // Deadzone
+        if (movement.magnitude < deadZone)
+            movement = Vector2.zero;
 
-        // Update animator parameters
-        anim.SetFloat("moveX", lastMovement.x);
-        anim.SetFloat("moveY", lastMovement.y);
-        anim.SetFloat("speed", movement.sqrMagnitude);
+        // Hareket varsa yönü kaydet
+        if (movement != Vector2.zero)
+            lastMovement = movement.normalized;
+
+        // MOVE TREE
+        anim.SetFloat("moveX", movement.x);
+        anim.SetFloat("moveY", movement.y);
+        anim.SetFloat("speed", movement.magnitude);
+
+        // IDLE TREE (son bakılan yön)
+        anim.SetFloat("idleX", lastMovement.x);
+        anim.SetFloat("idleY", lastMovement.y);
     }
 
     private void FixedUpdate()
     {
-        // Apply movement using physics
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 

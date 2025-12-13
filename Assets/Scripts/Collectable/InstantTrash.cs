@@ -1,26 +1,23 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Anlık toplanan çöp. Dokunulduğunda hemen yok olur.
+/// </summary>
 public class InstantTrash : MonoBehaviour, ICollectable
 {
     [SerializeField] private CollectableType type = CollectableType.InstantTrash;
 
-    public CollectableType GetCollectableType()
-    {
-        return type;
-    }
+    public CollectableType GetCollectableType() => type;
 
     public void Interact()
     {
-        // Play pickup sound
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.PlaySound(AudioManager.Instance.instantTrashPickup);
-        }
+        // Random ses çal
+        AudioManager.Instance?.PlayRandomInstantTrash();
 
-        // Notify game manager
-        // TODO: GameManager.Instance.OnInstantTrashCollected();
+        // Task manager'a bildir
+        CollectableTaskManager.Instance?.OnCollected(type);
 
-        // Destroy object
+        // Objeyi yok et
         Destroy(gameObject);
     }
 }

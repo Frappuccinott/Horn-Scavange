@@ -1,26 +1,23 @@
 using UnityEngine;
 
+/// <summary>
+/// Golden Horn parçasý. Toplanýnca özel ses çalar.
+/// </summary>
 public class GoldenHornPiece : MonoBehaviour, ICollectable
 {
     [SerializeField] private CollectableType type = CollectableType.GoldenHorn;
 
-    public CollectableType GetCollectableType()
-    {
-        return type;
-    }
+    public CollectableType GetCollectableType() => type;
 
     public void Interact()
     {
-        // Play pickup sound
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.PlaySound(AudioManager.Instance.goldenHornPickup);
-        }
+        // Golden Horn sesi
+        AudioManager.Instance?.PlayGoldenHornSFX();
 
-        // Notify game manager
-        // TODO: GameManager.Instance.OnGoldenHornCollected();
+        // Task manager'a bildir
+        CollectableTaskManager.Instance?.OnCollected(type);
 
-        // Destroy object
+        // Objeyi yok et
         Destroy(gameObject);
     }
 }

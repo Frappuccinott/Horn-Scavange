@@ -1,11 +1,12 @@
 using UnityEngine;
 
+/// <summary>
+/// Çöp teslim alaný. Karakter elindeki çöpü burada teslim edebilir.
+/// </summary>
 public class DeliveryZone : MonoBehaviour, ICollectable
 {
     [SerializeField] private CollectableType type = CollectableType.CarryTrash;
-
     public bool IsPlayerInside { get; private set; }
-
     private CharacterCarrySystem carrySystem;
 
     public CollectableType GetCollectableType() => type;
@@ -33,14 +34,14 @@ public class DeliveryZone : MonoBehaviour, ICollectable
 
     public void Interact()
     {
-        // Check if character is carrying trash
+        // Elinde çöp yoksa teslim edilemez
         if (carrySystem == null || !carrySystem.IsCarrying)
         {
-            AudioManager.Instance?.PlaySound(AudioManager.Instance.cannotPickupSound);
+            AudioManager.Instance?.PlayCannotPickup();
             return;
         }
 
-        // Deliver the carried trash
+        // Çöpü teslim et
         var trash = carrySystem.GetCarriedTrash();
         if (trash != null)
         {
