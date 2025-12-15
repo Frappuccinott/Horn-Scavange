@@ -12,7 +12,7 @@ public class GoldenHornPiece : MonoBehaviour, ICollectable
     public void Interact()
     {
         // Golden Horn sesi
-        AudioManager.Instance?.PlayGoldenHornSFX();
+        AudioManager.Instance?.PlayGoldenHorn();
 
         // Task manager'a bildir
         CollectableTaskManager.Instance?.OnCollected(type);

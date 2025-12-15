@@ -1,196 +1,286 @@
-using UnityEngine;
-using UnityEngine.Audio;
-using UnityEngine.UI;
-using TMPro;
+//using System.Collections.Generic;
+//using TMPro;
+//using UnityEngine;
+//using UnityEngine.UI;
+
+//public class SettingsMenu : MonoBehaviour
+//{
+//    [Header("Ses")]
+//    [SerializeField] private Slider musicSlider;
+//    [SerializeField] private Slider sfxSlider;
+//    [SerializeField] private Slider dubbingSlider;
+
+//    [Header("Görüntü")]
+//    [SerializeField] private TMP_Dropdown resolutionDropdown;
+//    [SerializeField] private Toggle fullscreenToggle;
+
+//    private Resolution[] resolutions;
+
+//    private const string MUSIC_PREF = "MusicVolume";
+//    private const string SFX_PREF = "SFXVolume";
+//    private const string DUBBING_PREF = "DubbingVolume";
+
+//    private void Start()
+//    {
+//        SetupAudioSliders();
+//        LoadAudioSettings();
+//        LoadResolutionSettings();
+//    }
+
+//    private void SetupAudioSliders()
+//    {
+//        if (musicSlider != null)
+//            musicSlider.onValueChanged.AddListener(SetMusicVolume);
+
+//        if (sfxSlider != null)
+//            sfxSlider.onValueChanged.AddListener(SetSFXVolume);
+
+//        if (dubbingSlider != null)
+//            dubbingSlider.onValueChanged.AddListener(SetDubbingVolume);
+//    }
+
+//    // ===================== SES =====================
+
+//    public void SetMusicVolume(float value)
+//    {
+//        AudioManager.Instance?.SetMusicVolume(value);
+//    }
+
+//    public void SetSFXVolume(float value)
+//    {
+//        AudioManager.Instance?.SetSFXVolume(value);
+//    }
+
+//    public void SetDubbingVolume(float value)
+//    {
+//        AudioManager.Instance?.SetDubbingVolume(value);
+//    }
+
+//    private void LoadAudioSettings()
+//    {
+//        float savedMusicVolume = PlayerPrefs.GetFloat(MUSIC_PREF, 0.75f);
+//        if (musicSlider != null)
+//        {
+//            musicSlider.value = savedMusicVolume;
+//        }
+
+//        float savedSFXVolume = PlayerPrefs.GetFloat(SFX_PREF, 0.75f);
+//        if (sfxSlider != null)
+//        {
+//            sfxSlider.value = savedSFXVolume;
+//        }
+
+//        float savedDubbingVolume = PlayerPrefs.GetFloat(DUBBING_PREF, 0.75f);
+//        if (dubbingSlider != null)
+//        {
+//            dubbingSlider.value = savedDubbingVolume;
+//        }
+//    }
+
+//    // ===================== GÖRÜNTÜ =====================
+
+//    public void SetResolution(int index)
+//    {
+//        if (resolutions == null || index < 0 || index >= resolutions.Length)
+//            return;
+
+//        Resolution r = resolutions[index];
+//        Screen.SetResolution(r.width, r.height, Screen.fullScreen);
+
+//        PlayerPrefs.SetInt("ResolutionIndex", index);
+//        PlayerPrefs.Save();
+//    }
+
+//    public void SetFullScreen(bool fullscreen)
+//    {
+//        Screen.fullScreen = fullscreen;
+//        PlayerPrefs.SetInt("Fullscreen", fullscreen ? 1 : 0);
+//        PlayerPrefs.Save();
+//    }
+
+//    private void LoadResolutionSettings()
+//    {
+//        resolutions = Screen.resolutions;
+//        if (resolutionDropdown == null) return;
+
+//        resolutionDropdown.ClearOptions();
+
+//        List<string> options = new();
+//        int currentIndex = 0;
+
+//        for (int i = 0; i < resolutions.Length; i++)
+//        {
+//            options.Add($"{resolutions[i].width} x {resolutions[i].height}");
+
+//            if (resolutions[i].width == Screen.currentResolution.width &&
+//                resolutions[i].height == Screen.currentResolution.height)
+//                currentIndex = i;
+//        }
+
+//        resolutionDropdown.AddOptions(options);
+
+//        int savedIndex = PlayerPrefs.GetInt("ResolutionIndex", currentIndex);
+//        savedIndex = Mathf.Clamp(savedIndex, 0, resolutions.Length - 1);
+
+//        resolutionDropdown.value = savedIndex;
+//        resolutionDropdown.RefreshShownValue();
+
+//        bool fullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+//        fullscreenToggle.isOn = fullscreen;
+//        Screen.fullScreen = fullscreen;
+
+//        SetResolution(savedIndex);
+//    }
+
+//    // ===================== RESET =====================
+
+//    public void ResetToDefaults()
+//    {
+//        const float defaultVolume = 0.75f;
+
+//        if (musicSlider != null)
+//        {
+//            musicSlider.value = defaultVolume;
+//            SetMusicVolume(defaultVolume);
+//        }
+
+//        if (sfxSlider != null)
+//        {
+//            sfxSlider.value = defaultVolume;
+//            SetSFXVolume(defaultVolume);
+//        }
+
+//        if (dubbingSlider != null)
+//        {
+//            dubbingSlider.value = defaultVolume;
+//            SetDubbingVolume(defaultVolume);
+//        }
+
+//        if (fullscreenToggle != null)
+//        {
+//            fullscreenToggle.isOn = true;
+//            SetFullScreen(true);
+//        }
+
+//        if (resolutions != null && resolutions.Length > 0 && resolutionDropdown != null)
+//        {
+//            int index = resolutions.Length - 1;
+//            resolutionDropdown.value = index;
+//            resolutionDropdown.RefreshShownValue();
+//            SetResolution(index);
+//        }
+//    }
+//}
+
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour
 {
     [Header("Ses")]
-    public AudioMixer audioMixer;
-    public Slider musicSlider;
-    public Slider sfxSlider;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Slider dubbingSlider;
 
     [Header("Görüntü")]
-    public TMP_Dropdown resolutionDropdown;
-    public Toggle fullscreenToggle;
+    [SerializeField] private TMP_Dropdown resolutionDropdown;
+    [SerializeField] private Toggle fullscreenToggle;
 
     private Resolution[] resolutions;
 
-    void Start()
+    private const string MUSIC_PREF = "MusicVolume";
+    private const string SFX_PREF = "SFXVolume";
+    private const string DUBBING_PREF = "DubbingVolume";
+    private const string RESOLUTION_PREF = "ResolutionIndex";
+    private const string FULLSCREEN_PREF = "Fullscreen";
+    private const float DEFAULT_VOLUME = 0.75f;
+
+    private void Start()
     {
+        // Ses ayarlarýný yükle ve dinleyicileri ekle
+        musicSlider?.onValueChanged.AddListener(SetMusicVolume);
+        sfxSlider?.onValueChanged.AddListener(SetSFXVolume);
+        dubbingSlider?.onValueChanged.AddListener(SetDubbingVolume);
+
         LoadAudioSettings();
         LoadResolutionSettings();
-        LoadControlSettings();
     }
 
-    // ---------------- SES ----------------//
-    public void SetMusicVolume(float volume)
+    // Ses Ayarlarý
+    public void SetMusicVolume(float value) => AudioManager.Instance?.SetMusicVolume(value);
+    public void SetSFXVolume(float value) => AudioManager.Instance?.SetSFXVolume(value);
+    public void SetDubbingVolume(float value) => AudioManager.Instance?.SetDubbingVolume(value);
+
+    private void LoadAudioSettings()
     {
-        if (audioMixer == null) return;
-
-        float volumeToSet = Mathf.Log10(Mathf.Clamp(volume, 0.001f, 1f)) * 20f;
-        if (volume == 0f) volumeToSet = -80f;
-
-        audioMixer.SetFloat("MusicVolume", volumeToSet);
-        PlayerPrefs.SetFloat("MusicVolume", volume);
-        PlayerPrefs.Save();
+        if (musicSlider) musicSlider.value = PlayerPrefs.GetFloat(MUSIC_PREF, DEFAULT_VOLUME);
+        if (sfxSlider) sfxSlider.value = PlayerPrefs.GetFloat(SFX_PREF, DEFAULT_VOLUME);
+        if (dubbingSlider) dubbingSlider.value = PlayerPrefs.GetFloat(DUBBING_PREF, DEFAULT_VOLUME);
     }
 
-    public void SetSFXVolume(float volume)
+    // Görüntü Ayarlarý
+    public void SetResolution(int index)
     {
-        if (audioMixer == null) return;
+        if (resolutions == null || index < 0 || index >= resolutions.Length) return;
 
-        float volumeToSet = Mathf.Log10(Mathf.Clamp(volume, 0.001f, 1f)) * 20f;
-        if (volume == 0f) volumeToSet = -80f;
-
-        audioMixer.SetFloat("SFXVolume", volumeToSet);
-        PlayerPrefs.SetFloat("SFXVolume", volume);
-        PlayerPrefs.Save();
+        Resolution r = resolutions[index];
+        Screen.SetResolution(r.width, r.height, Screen.fullScreen);
+        PlayerPrefs.SetInt(RESOLUTION_PREF, index);
     }
 
-    // ---------------- GÖRÜNTÜ ----------------//
-    public void SetResolution(int resolutionIndex)
+    public void SetFullScreen(bool fullscreen)
     {
-        if (resolutions == null || resolutionIndex < 0 || resolutionIndex >= resolutions.Length)
-            return;
-
-        Resolution res = resolutions[resolutionIndex];
-        Screen.SetResolution(res.width, res.height, Screen.fullScreen);
-        PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex);
-        PlayerPrefs.Save();
-    }
-
-    public void SetFullScreen(bool isFullscreen)
-    {
-        Screen.fullScreen = isFullscreen;
-        PlayerPrefs.SetInt("FullScreen", isFullscreen ? 1 : 0);
-        PlayerPrefs.Save();
+        Screen.fullScreen = fullscreen;
+        PlayerPrefs.SetInt(FULLSCREEN_PREF, fullscreen ? 1 : 0);
     }
 
     private void LoadResolutionSettings()
     {
         resolutions = Screen.resolutions;
+        if (!resolutionDropdown) return;
 
-        if (resolutionDropdown != null)
+        resolutionDropdown.ClearOptions();
+
+        List<string> options = new();
+        int currentIndex = 0;
+
+        for (int i = 0; i < resolutions.Length; i++)
         {
-            resolutionDropdown.ClearOptions();
-
-            int currentResolutionIndex = 0;
-            var options = new List<string>();
-
-            for (int i = 0; i < resolutions.Length; i++)
-            {
-                string option = resolutions[i].width + " x " + resolutions[i].height;
-                options.Add(option);
-
-                if (resolutions[i].width == Screen.currentResolution.width &&
-                    resolutions[i].height == Screen.currentResolution.height)
-                {
-                    currentResolutionIndex = i;
-                }
-
-            }
-
-            resolutionDropdown.AddOptions(options);
-
-            int savedIndex = PlayerPrefs.GetInt("ResolutionIndex", currentResolutionIndex);
-            savedIndex = Mathf.Clamp(savedIndex, 0, resolutions.Length - 1);
-            resolutionDropdown.value = savedIndex;
-            resolutionDropdown.RefreshShownValue();
-
-            // Listener ekle
-            resolutionDropdown.onValueChanged.RemoveAllListeners();
-            resolutionDropdown.onValueChanged.AddListener(SetResolution);
-
-            bool isFullscreen = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
-            if (fullscreenToggle != null)
-            {
-                fullscreenToggle.isOn = isFullscreen;
-                fullscreenToggle.onValueChanged.RemoveAllListeners();
-                fullscreenToggle.onValueChanged.AddListener(SetFullScreen);
-            }
-
-            Screen.fullScreen = isFullscreen;
-
-            //Uygula
-            SetResolution(savedIndex);
-
+            options.Add($"{resolutions[i].width} x {resolutions[i].height}");
+            if (resolutions[i].width == Screen.currentResolution.width &&
+                resolutions[i].height == Screen.currentResolution.height)
+                currentIndex = i;
         }
 
-        else
-        {
-            // Eðer dropdown yoksa yine de fullscreen ayarýný uygula
-            bool isFullscreen = PlayerPrefs.GetInt("FullScreen", 1) == 1;
-            Screen.fullScreen = isFullscreen;
-            if (fullscreenToggle != null) fullscreenToggle.isOn = isFullscreen;
-        }
+        resolutionDropdown.AddOptions(options);
+
+        int savedIndex = Mathf.Clamp(PlayerPrefs.GetInt(RESOLUTION_PREF, currentIndex), 0, resolutions.Length - 1);
+        resolutionDropdown.value = savedIndex;
+        resolutionDropdown.RefreshShownValue();
+
+        bool fullscreen = PlayerPrefs.GetInt(FULLSCREEN_PREF, 1) == 1;
+        if (fullscreenToggle) fullscreenToggle.isOn = fullscreen;
+        Screen.fullScreen = fullscreen;
+
+        SetResolution(savedIndex);
     }
 
-    // ---------------- AUDIO AYARLARI YÜKLE ----------------//
-    private void LoadAudioSettings()
-    {
-        float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
-        if (musicSlider != null)
-        {
-            musicSlider.value = musicVolume;
-            // Eskiden eklenmiþ olabilecek listener'larý kaldýrýp tekrar ekleyelim
-            musicSlider.onValueChanged.RemoveAllListeners();
-            musicSlider.onValueChanged.AddListener(SetMusicVolume);
-        }
-        SetMusicVolume(musicVolume);
-
-        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
-        if (sfxSlider != null)
-        {
-            sfxSlider.value = sfxVolume;
-            sfxSlider.onValueChanged.RemoveAllListeners();
-            sfxSlider.onValueChanged.AddListener(SetSFXVolume);
-        }
-        SetSFXVolume(sfxVolume);
-    }
-
-    // ---------------- KONTROL AYARLARI (PLACEHOLDER) ----------------//
-   
-    private void LoadControlSettings()
-    {
-        // Eðer kontrol tuþlarý/ayarlarý varsa burada yükleyip uygulayabilirsin.
-        // Þu anda bir placeholder: eðer kullanmayacaksan Start() içindeki çaðrýyý kaldýrabilirsin.
-    }
-
-    // ---------------- RESET ---------------- //
-
+    // Varsayýlan ayarlara dön
     public void ResetToDefaults()
     {
-        // Müzik ve SFX sesleri //
-        float defaultVolume = 0.75f;
-        if (musicSlider  != null) musicSlider.value = defaultVolume;
-        SetMusicVolume(defaultVolume);
+        if (musicSlider) { musicSlider.value = DEFAULT_VOLUME; SetMusicVolume(DEFAULT_VOLUME); }
+        if (sfxSlider) { sfxSlider.value = DEFAULT_VOLUME; SetSFXVolume(DEFAULT_VOLUME); }
+        if (dubbingSlider) { dubbingSlider.value = DEFAULT_VOLUME; SetDubbingVolume(DEFAULT_VOLUME); }
+        if (fullscreenToggle) { fullscreenToggle.isOn = true; SetFullScreen(true); }
 
-        float defaultSFXVolume = 0.75f;
-        if (sfxSlider != null) sfxSlider.value = defaultSFXVolume;
-
-        // Fullscreen //
-        if (fullscreenToggle != null) fullscreenToggle.isOn = true;
-        SetFullScreen(true);
-
-        // Çözünürlük - en yüksek çözünürlüðü varsayalým //
-        if (resolutions != null && resolutions.Length > 0 && resolutionDropdown != null)
+        if (resolutions?.Length > 0 && resolutionDropdown)
         {
-            int defaultResolutionIndex = resolutions.Length - 1;
-            resolutionDropdown.value = defaultResolutionIndex;
+            int index = resolutions.Length - 1;
+            resolutionDropdown.value = index;
             resolutionDropdown.RefreshShownValue();
-            SetResolution(defaultResolutionIndex);
+            SetResolution(index);
         }
-
-        PlayerPrefs.Save();
-
-
+    }
 }
-
-
-}
-
-
-

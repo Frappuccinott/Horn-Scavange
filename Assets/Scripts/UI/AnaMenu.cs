@@ -13,7 +13,7 @@ public class AnaMenu : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene(1);
     }
 
     public void OpenSetPanel()

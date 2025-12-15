@@ -1368,8 +1368,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   mixer: {fileID: 24100000, guid: 430a193e5613bde44a2dc82e1ef5944d, type: 2}
+  musicGroup: {fileID: -3358067758417115203, guid: 430a193e5613bde44a2dc82e1ef5944d, type: 2}
   sfxGroup: {fileID: 6460264775548179940, guid: 430a193e5613bde44a2dc82e1ef5944d, type: 2}
   dubbingGroup: {fileID: 7085250393448983492, guid: 430a193e5613bde44a2dc82e1ef5944d, type: 2}
+  mainMenuMusic: {fileID: 8300000, guid: d684d5ce5b5e6d6409d264da2ce91b3f, type: 3}
   instantTrashPickups:
   - {fileID: 8300000, guid: cc007292cb4de0348ac3de71338a8746, type: 3}
   - {fileID: 8300000, guid: 28e28ec11925d5348ad3a14f17e42823, type: 3}
@@ -1389,6 +1391,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b064ca6a4554e2740b0790dff7fab58a, type: 3}
   goldenHornPickup: {fileID: 8300000, guid: e873d77fb6433e74a922c2b6c9bb7e73, type: 3}
   cannotPickupSound: {fileID: 8300000, guid: 8396871637b4d4347b543d5f46464309, type: 3}
+  uiClickSound: {fileID: 8300000, guid: 73334b3afa384934b8abb1c50b21210a, type: 3}
 --- !u!114 &1299961069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1413,6 +1416,54 @@ MonoBehaviour:
   - type: 1
     count: 2
     text: {fileID: 1238157709}
+--- !u!1 &1433287491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1433287493}
+  - component: {fileID: 1433287492}
+  m_Layer: 0
+  m_Name: LevelAudio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1433287492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433287491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a22e6044e5ca5644941127a6cec8b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelMusic
+  musicClips:
+  - {fileID: 8300000, guid: 239ded78b7bfbae48a0c33a7ac039e65, type: 3}
+  - {fileID: 8300000, guid: b842952e17530ba49b1aa23a36894edb, type: 3}
+  - {fileID: 8300000, guid: df16fdf5ae8af19479830f28db48df49, type: 3}
+--- !u!4 &1433287493
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433287491}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 864.67377, y: 483.6718, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1724598563
 GameObject:
   m_ObjectHideFlags: 0
@@ -1761,3 +1812,4 @@ SceneRoots:
   - {fileID: 1215258885}
   - {fileID: 4414332708107394961}
   - {fileID: 1299961067}
+  - {fileID: 1433287493}
