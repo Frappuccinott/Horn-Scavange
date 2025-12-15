@@ -37,4 +37,24 @@ public class AnaMenu : MonoBehaviour
     }
 
 }
-   
+
+//using UnityEngine;
+//using UnityEngine.SceneManagement;
+
+//public class AnaMenu : MonoBehaviour
+//{
+//    [SerializeField] private GameObject settingsPanel;
+//    [SerializeField] private GameObject creditsPanel;
+
+//    // Oyun baþlatma ve çýkýþ
+//    public void Play() => SceneManager.LoadScene(1);
+//    public void ExitGame() => Application.Quit();
+
+//    // Panel yönetimi
+//    public void OpenSetPanel() => SetPanelActive(settingsPanel, true);
+//    public void CloseSetPanel() => SetPanelActive(settingsPanel, false);
+//    public void OpenCreditsPanel() => SetPanelActive(creditsPanel, true);
+//    public void CloseCreditsPanel() => SetPanelActive(creditsPanel, false);
+
+//    private void SetPanelActive(GameObject panel, bool active) => panel?.SetActive(active);
+//}

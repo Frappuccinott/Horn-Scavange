@@ -5,12 +5,11 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     [Header("Panel Referansları")]
-    public GameObject pausePanel;
-    public GameObject settingsPanel;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject settingsPanel;
 
-    private bool isPaused = false;
-    private bool pauseWasActiveBeforeSettings = false;
-
+    private bool isPaused;
+    private bool pauseWasActiveBeforeSettings;
     private CharacterControls inputActions;
     private InputAction pauseAction;
 
@@ -34,54 +33,51 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
-        if (pausePanel != null) pausePanel.SetActive(false);
-        if (settingsPanel != null) settingsPanel.SetActive(false);
-
-        Time.timeScale = 1f;
-        isPaused = false;
+        pausePanel?.SetActive(false);
+        settingsPanel?.SetActive(false);
+        SetPauseState(false);
     }
 
+    // Input yönetimi
     private void OnPausePressed(InputAction.CallbackContext context)
     {
-        // Ayarlar açıksa önce onu kapat
-        if (settingsPanel != null && settingsPanel.activeSelf)
+        if (settingsPanel?.activeSelf == true)
         {
             CloseSettings();
             return;
         }
 
-        if (isPaused)
-            ResumeGame();
-        else
-            PauseGame();
+        if (isPaused) ResumeGame();
+        else PauseGame();
+    }
+
+    // Pause durumu kontrolü
+    private void SetPauseState(bool pause)
+    {
+        Time.timeScale = pause ? 0f : 1f;
+        isPaused = pause;
     }
 
     public void PauseGame()
     {
-        if (pausePanel == null) return;
-
+        if (!pausePanel) return;
         pausePanel.SetActive(true);
-        if (settingsPanel != null) settingsPanel.SetActive(false);
-
-        Time.timeScale = 0f;
-        isPaused = true;
+        settingsPanel?.SetActive(false);
+        SetPauseState(true);
     }
 
     public void ResumeGame()
     {
-        if (pausePanel != null) pausePanel.SetActive(false);
-        if (settingsPanel != null) settingsPanel.SetActive(false);
-
-        Time.timeScale = 1f;
-        isPaused = false;
+        pausePanel?.SetActive(false);
+        settingsPanel?.SetActive(false);
+        SetPauseState(false);
     }
 
+    // Ayarlar menüsü
     public void OpenSettings()
     {
-        if (settingsPanel == null || pausePanel == null) return;
-
+        if (!settingsPanel || !pausePanel) return;
         pauseWasActiveBeforeSettings = pausePanel.activeSelf;
-
         pausePanel.SetActive(false);
         settingsPanel.SetActive(true);
         settingsPanel.transform.SetAsLastSibling();
@@ -89,34 +85,28 @@ public class PauseMenu : MonoBehaviour
 
     public void CloseSettings()
     {
-        if (settingsPanel == null || pausePanel == null) return;
-
+        if (!settingsPanel || !pausePanel) return;
         settingsPanel.SetActive(false);
 
         if (pauseWasActiveBeforeSettings)
         {
             pausePanel.SetActive(true);
-            isPaused = true;
-            Time.timeScale = 0f;
+            SetPauseState(true);
         }
         else
         {
-            isPaused = false;
-            Time.timeScale = 1f;
+            SetPauseState(false);
         }
     }
 
-    public void QuitGame()
-    {
-        Debug.Log("Oyun kapatıldı!");
-        Application.Quit();
-    }
+    // Menü işlemleri
+    public void ClosePauseMenu() => ResumeGame();
+
     public void BackMainMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
-    public void ClosePauseMenu()
-    {
-        pausePanel.SetActive(false);
-    }
+
+    public void QuitGame() => Application.Quit();
 }
