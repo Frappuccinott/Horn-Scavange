@@ -222,8 +222,8 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -7466780318805306418, guid: 752c690b7c438fa48b368b417f337595, type: 3}
+  m_SortingOrder: 12
+  m_Sprite: {fileID: -7466780318805306418, guid: bab866d251898e14e91ad97ff6447e06, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -317,7 +317,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -1.5104475}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -327,7 +327,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.5, y: 3.8}
+  m_Size: {x: 2.5, y: 0.7791052}
   m_EdgeRadius: 0
 --- !u!114 &4208958465135273196
 MonoBehaviour:
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 371657a5179ea594dac74b0ee04e60d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterMovement
-  moveSpeed: 5
+  moveSpeed: 3.5
 --- !u!114 &562736981951716265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,4 +367,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterCarrySystem
   movement: {fileID: 4208958465135273196}
-  slowMultiplier: 0.6
+  slowMultiplier: 0.8

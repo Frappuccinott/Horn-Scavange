@@ -2,7 +2,6 @@
 //using System.Collections.Generic;
 //using UnityEngine;
 //using UnityEngine.Audio;
-//using UnityEngine.SceneManagement;
 
 //public class AudioManager : MonoBehaviour
 //{
@@ -14,10 +13,7 @@
 //    [SerializeField] private AudioMixerGroup sfxGroup;
 //    [SerializeField] private AudioMixerGroup dubbingGroup;
 
-//    [Header("Music")]
-//    [SerializeField] private AudioClip mainMenuMusic;
-
-//    [Header("UI")]
+//    [Header("UI SFX")]
 //    [SerializeField] private AudioClip uiClickSound;
 
 //    [Header("Gameplay SFX")]
@@ -37,11 +33,14 @@
 //    private const string MUSIC_PARAM = "Music";
 //    private const string SFX_PARAM = "SFX";
 //    private const string DUBBING_PARAM = "Dubbing";
-
-//    #region UNITY
+//    private const string MUSIC_PREF = "MusicVolume";
+//    private const string SFX_PREF = "SFXVolume";
+//    private const string DUBBING_PREF = "DubbingVolume";
+//    private const float DEFAULT_VOLUME = 0.75f;
 
 //    private void Awake()
 //    {
+//        // Singleton - ama DontDestroyOnLoad YOK
 //        if (Instance != null)
 //        {
 //            Destroy(gameObject);
@@ -49,83 +48,56 @@
 //        }
 
 //        Instance = this;
-//        DontDestroyOnLoad(gameObject);
-
 //        CreateSources();
 //    }
 
 //    private void Start()
 //    {
 //        LoadAudioSettings();
+//        StartLevelMusic();
 //    }
 
-//    private void OnEnable()
+//    private void OnDestroy()
 //    {
-//        SceneManager.sceneLoaded += OnSceneLoaded;
-//    }
-
-//    private void OnDisable()
-//    {
-//        SceneManager.sceneLoaded -= OnSceneLoaded;
-//    }
-
-//    #endregion
-
-//    #region SETUP
-
-//    private void CreateSources()
-//    {
-//        musicSource = gameObject.AddComponent<AudioSource>();
-//        musicSource.loop = false;
-//        musicSource.playOnAwake = false;
-//        musicSource.outputAudioMixerGroup = musicGroup;
-
-//        sfxSource = gameObject.AddComponent<AudioSource>();
-//        sfxSource.playOnAwake = false;
-//        sfxSource.outputAudioMixerGroup = sfxGroup;
-
-//        dubbingSource = gameObject.AddComponent<AudioSource>();
-//        dubbingSource.playOnAwake = false;
-//        dubbingSource.outputAudioMixerGroup = dubbingGroup;
-//    }
-
-//    #endregion
-
-//    #region SCENE MUSIC
-
-//    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-//    {
+//        // Coroutine temizliği
 //        if (musicRoutine != null)
-//            StopCoroutine(musicRoutine);
-
-//        musicSource.Stop();
-
-//        if (scene.buildIndex == 0)
 //        {
-//            PlayMainMenuMusic();
-//            return;
+//            StopCoroutine(musicRoutine);
 //        }
 
+//        // Instance temizliği
+//        if (Instance == this)
+//        {
+//            Instance = null;
+//        }
+//    }
+
+//    // Audio Source oluşturma
+//    private void CreateSources()
+//    {
+//        musicSource = CreateAudioSource(musicGroup, false);
+//        sfxSource = CreateAudioSource(sfxGroup, false);
+//        dubbingSource = CreateAudioSource(dubbingGroup, false);
+//    }
+
+//    private AudioSource CreateAudioSource(AudioMixerGroup group, bool loop)
+//    {
+//        AudioSource source = gameObject.AddComponent<AudioSource>();
+//        source.outputAudioMixerGroup = group;
+//        source.playOnAwake = false;
+//        source.loop = loop;
+//        return source;
+//    }
+
+//    // Level müziği
+//    private void StartLevelMusic()
+//    {
 //        LevelMusic levelMusic = FindAnyObjectByType<LevelMusic>();
-//        if (levelMusic == null || levelMusic.musicClips.Count == 0)
-//            return;
-
-//        StartLevelMusic(levelMusic.musicClips);
-//    }
-
-//    private void PlayMainMenuMusic()
-//    {
-//        if (mainMenuMusic == null) return;
-
-//        musicSource.loop = true;
-//        musicSource.clip = mainMenuMusic;
-//        musicSource.Play();
-//    }
-
-//    private void StartLevelMusic(List<AudioClip> clips)
-//    {
-//        musicPool = new List<AudioClip>(clips);
-//        musicRoutine = StartCoroutine(LevelMusicRoutine(clips));
+//        if (levelMusic?.musicClips.Count > 0)
+//        {
+//            musicPool = new List<AudioClip>(levelMusic.musicClips);
+//            musicRoutine = StartCoroutine(LevelMusicRoutine(levelMusic.musicClips));
+//        }
 //    }
 
 //    private IEnumerator LevelMusicRoutine(List<AudioClip> fullPool)
@@ -145,11 +117,10 @@
 //        }
 //    }
 
-//    #endregion
-
-//    #region SFX
-
+//    // UI SFX
 //    public void PlayUIClick() => PlaySFX(uiClickSound);
+
+//    // Gameplay SFX
 //    public void PlayRandomInstantTrash() => PlayRandom(instantTrashPickups);
 //    public void PlayRandomCarryPickup() => PlayRandom(carryTrashPickups);
 //    public void PlayRandomCarryDeliver() => PlayRandom(carryTrashDelivers);
@@ -158,74 +129,40 @@
 
 //    private void PlaySFX(AudioClip clip)
 //    {
-//        if (clip == null) return;
-//        sfxSource.PlayOneShot(clip);
+//        if (clip) sfxSource.PlayOneShot(clip);
 //    }
 
 //    private void PlayRandom(AudioClip[] clips)
 //    {
-//        if (clips == null || clips.Length == 0) return;
-//        sfxSource.PlayOneShot(clips[Random.Range(0, clips.Length)]);
+//        if (clips?.Length > 0) sfxSource.PlayOneShot(clips[Random.Range(0, clips.Length)]);
 //    }
 
-//    #endregion
-
-//    #region DUBBING
-
+//    // Dublaj
 //    public void PlayDubbing(AudioClip clip)
 //    {
-//        if (clip == null) return;
+//        if (!clip) return;
 //        dubbingSource.Stop();
 //        dubbingSource.PlayOneShot(clip);
 //    }
 
-//    #endregion
+//    // Ses seviyesi ayarları
+//    public void SetMusicVolume(float volume) => SetVolume(MUSIC_PARAM, MUSIC_PREF, volume);
+//    public void SetSFXVolume(float volume) => SetVolume(SFX_PARAM, SFX_PREF, volume);
+//    public void SetDubbingVolume(float volume) => SetVolume(DUBBING_PARAM, DUBBING_PREF, volume);
 
-//    #region VOLUME
-
-//    public void SetMusicVolume(float volume)
+//    private void SetVolume(string param, string pref, float volume)
 //    {
-//        float volumeToSet = Mathf.Log10(Mathf.Clamp(volume, 0.001f, 1f)) * 20;
-//        if (volume == 0f) volumeToSet = -80f;
-
-//        mixer.SetFloat(MUSIC_PARAM, volumeToSet);
-//        PlayerPrefs.SetFloat("MusicVolume", volume);
-//        PlayerPrefs.Save();
-//    }
-
-//    public void SetSFXVolume(float volume)
-//    {
-//        float volumeToSet = Mathf.Log10(Mathf.Clamp(volume, 0.001f, 1f)) * 20;
-//        if (volume == 0f) volumeToSet = -80f;
-
-//        mixer.SetFloat(SFX_PARAM, volumeToSet);
-//        PlayerPrefs.SetFloat("SFXVolume", volume);
-//        PlayerPrefs.Save();
-//    }
-
-//    public void SetDubbingVolume(float volume)
-//    {
-//        float volumeToSet = Mathf.Log10(Mathf.Clamp(volume, 0.001f, 1f)) * 20;
-//        if (volume == 0f) volumeToSet = -80f;
-
-//        mixer.SetFloat(DUBBING_PARAM, volumeToSet);
-//        PlayerPrefs.SetFloat("DubbingVolume", volume);
-//        PlayerPrefs.Save();
+//        float db = volume == 0f ? -80f : Mathf.Log10(Mathf.Clamp(volume, 0.001f, 1f)) * 20;
+//        mixer.SetFloat(param, db);
+//        PlayerPrefs.SetFloat(pref, volume);
 //    }
 
 //    private void LoadAudioSettings()
 //    {
-//        float savedMusicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
-//        SetMusicVolume(savedMusicVolume);
-
-//        float savedSFXVolume = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
-//        SetSFXVolume(savedSFXVolume);
-
-//        float savedDubbingVolume = PlayerPrefs.GetFloat("DubbingVolume", 0.75f);
-//        SetDubbingVolume(savedDubbingVolume);
+//        SetMusicVolume(PlayerPrefs.GetFloat(MUSIC_PREF, DEFAULT_VOLUME));
+//        SetSFXVolume(PlayerPrefs.GetFloat(SFX_PREF, DEFAULT_VOLUME));
+//        SetDubbingVolume(PlayerPrefs.GetFloat(DUBBING_PREF, DEFAULT_VOLUME));
 //    }
-
-//    #endregion
 //}
 
 using System.Collections;
@@ -244,10 +181,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixerGroup sfxGroup;
     [SerializeField] private AudioMixerGroup dubbingGroup;
 
-    [Header("Music")]
-    [SerializeField] private AudioClip mainMenuMusic;
-
-    [Header("UI")]
+    [Header("UI SFX")]
     [SerializeField] private AudioClip uiClickSound;
 
     [Header("Gameplay SFX")]
@@ -281,16 +215,47 @@ public class AudioManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
         CreateSources();
+
+        DontDestroyOnLoad(gameObject); //unutma!!!
     }
 
-    private void Start() => LoadAudioSettings();
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
 
-    private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
-    private void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
-    // Audio Source oluşturma
+    private void Start()
+    {
+        LoadAudioSettings();
+        // ❌ StartLevelMusic BURADA YOK
+    }
+
+    private void OnDestroy()
+    {
+        if (musicRoutine != null)
+            StopCoroutine(musicRoutine);
+
+        if (Instance == this)
+            Instance = null;
+    }
+
+    // ===================== SCENE CALLBACK =====================
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Ana menü değilse level müziğini başlat
+        if (scene.name != "AnaMenu")
+        {
+            StartLevelMusic();
+        }
+    }
+
+    // ===================== AUDIO SOURCE =====================
     private void CreateSources()
     {
         musicSource = CreateAudioSource(musicGroup, false);
@@ -307,35 +272,18 @@ public class AudioManager : MonoBehaviour
         return source;
     }
 
-    // Sahne müziği yönetimi
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    // ===================== LEVEL MUSIC =====================
+    private void StartLevelMusic()
     {
-        if (musicRoutine != null) StopCoroutine(musicRoutine);
-        musicSource.Stop();
-
-        if (scene.buildIndex == 0)
-        {
-            PlayMainMenuMusic();
-            return;
-        }
+        if (musicRoutine != null)
+            StopCoroutine(musicRoutine);
 
         LevelMusic levelMusic = FindAnyObjectByType<LevelMusic>();
-        if (levelMusic?.musicClips.Count > 0)
-            StartLevelMusic(levelMusic.musicClips);
-    }
+        if (levelMusic == null || levelMusic.musicClips.Count == 0)
+            return;
 
-    private void PlayMainMenuMusic()
-    {
-        if (!mainMenuMusic) return;
-        musicSource.loop = true;
-        musicSource.clip = mainMenuMusic;
-        musicSource.Play();
-    }
-
-    private void StartLevelMusic(List<AudioClip> clips)
-    {
-        musicPool = new List<AudioClip>(clips);
-        musicRoutine = StartCoroutine(LevelMusicRoutine(clips));
+        musicPool = new List<AudioClip>(levelMusic.musicClips);
+        musicRoutine = StartCoroutine(LevelMusicRoutine(levelMusic.musicClips));
     }
 
     private IEnumerator LevelMusicRoutine(List<AudioClip> fullPool)
@@ -355,7 +303,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // SFX çalma
+    // ===================== SFX =====================
     public void PlayUIClick() => PlaySFX(uiClickSound);
     public void PlayRandomInstantTrash() => PlayRandom(instantTrashPickups);
     public void PlayRandomCarryPickup() => PlayRandom(carryTrashPickups);
@@ -365,30 +313,33 @@ public class AudioManager : MonoBehaviour
 
     private void PlaySFX(AudioClip clip)
     {
-        if (clip) sfxSource.PlayOneShot(clip);
+        if (clip)
+            sfxSource.PlayOneShot(clip);
     }
 
     private void PlayRandom(AudioClip[] clips)
     {
-        if (clips?.Length > 0) sfxSource.PlayOneShot(clips[Random.Range(0, clips.Length)]);
+        if (clips != null && clips.Length > 0)
+            sfxSource.PlayOneShot(clips[Random.Range(0, clips.Length)]);
     }
 
-    // Dublaj çalma
+    // ===================== DUBBING =====================
     public void PlayDubbing(AudioClip clip)
     {
         if (!clip) return;
+
         dubbingSource.Stop();
         dubbingSource.PlayOneShot(clip);
     }
 
-    // Ses seviyesi ayarları
+    // ===================== VOLUME =====================
     public void SetMusicVolume(float volume) => SetVolume(MUSIC_PARAM, MUSIC_PREF, volume);
     public void SetSFXVolume(float volume) => SetVolume(SFX_PARAM, SFX_PREF, volume);
     public void SetDubbingVolume(float volume) => SetVolume(DUBBING_PARAM, DUBBING_PREF, volume);
 
     private void SetVolume(string param, string pref, float volume)
     {
-        float db = volume == 0f ? -80f : Mathf.Log10(Mathf.Clamp(volume, 0.001f, 1f)) * 20;
+        float db = volume <= 0f ? -80f : Mathf.Log10(Mathf.Clamp(volume, 0.001f, 1f)) * 20f;
         mixer.SetFloat(param, db);
         PlayerPrefs.SetFloat(pref, volume);
     }

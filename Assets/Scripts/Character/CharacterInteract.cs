@@ -11,7 +11,9 @@ public class CharacterInteract : MonoBehaviour
 
         // Unsubscribe first to prevent duplicate subscriptions
         InputManager.controls.Character.Interact.started -= OnInteract;
-        InputManager.controls.Character.Interact.started += OnInteract;
+        //InputManager.controls.Character.Interact.started += OnInteract;
+        InputManager.controls.Character.Interact.performed += OnInteract;
+
     }
 
     private void OnDisable()

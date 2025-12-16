@@ -63,7 +63,7 @@ MonoBehaviour:
   musicGroup: {fileID: -3358067758417115203, guid: 430a193e5613bde44a2dc82e1ef5944d, type: 2}
   sfxGroup: {fileID: 6460264775548179940, guid: 430a193e5613bde44a2dc82e1ef5944d, type: 2}
   dubbingGroup: {fileID: 7085250393448983492, guid: 430a193e5613bde44a2dc82e1ef5944d, type: 2}
-  mainMenuMusic: {fileID: 8300000, guid: d684d5ce5b5e6d6409d264da2ce91b3f, type: 3}
+  mainMenuMusic: {fileID: 8300000, guid: 717823c8b6d33864581a85cc03a79833, type: 3}
   uiClickSound: {fileID: 8300000, guid: 73334b3afa384934b8abb1c50b21210a, type: 3}
   instantTrashPickups:
   - {fileID: 8300000, guid: cc007292cb4de0348ac3de71338a8746, type: 3}
