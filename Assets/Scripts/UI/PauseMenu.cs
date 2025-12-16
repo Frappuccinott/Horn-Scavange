@@ -18,8 +18,6 @@ public class PauseMenu : MonoBehaviour
     {
         inputActions = new CharacterControls();
         pauseAction = inputActions.UI.Pause;
-
-        // Level başladığında time scale'i garantiye al
         Time.timeScale = 1f;
     }
 
@@ -37,12 +35,11 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
-        if (pausePanel != null) pausePanel.SetActive(false);
-        if (settingsPanel != null) settingsPanel.SetActive(false);
+        pausePanel?.SetActive(false);
+        settingsPanel?.SetActive(false);
         SetPauseState(false);
     }
 
-    // Input yönetimi
     private void OnPausePressed(InputAction.CallbackContext context)
     {
         if (settingsPanel != null && settingsPanel.activeSelf)
@@ -57,23 +54,13 @@ public class PauseMenu : MonoBehaviour
             PauseGame();
     }
 
-    // Pause durumu kontrolü
     private void SetPauseState(bool pause)
     {
         Time.timeScale = pause ? 0f : 1f;
         isPaused = pause;
 
-        // Cursor yönetimi
-        if (pause)
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-        else
-        {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-        }
+        Cursor.visible = pause;
+        Cursor.lockState = pause ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     public void PauseGame()
@@ -81,20 +68,19 @@ public class PauseMenu : MonoBehaviour
         if (pausePanel == null) return;
 
         pausePanel.SetActive(true);
-        if (settingsPanel != null) settingsPanel.SetActive(false);
-        if (ingamePanel != null) ingamePanel.SetActive(false);
+        settingsPanel?.SetActive(false);
+        ingamePanel?.SetActive(false);
         SetPauseState(true);
     }
 
     public void ResumeGame()
     {
-        if (pausePanel != null) pausePanel.SetActive(false);
-        if (settingsPanel != null) settingsPanel.SetActive(false);
-        if (ingamePanel != null) ingamePanel.SetActive(true);
+        pausePanel?.SetActive(false);
+        settingsPanel?.SetActive(false);
+        ingamePanel?.SetActive(true);
         SetPauseState(false);
     }
 
-    // Ayarlar menüsü
     public void OpenSettings()
     {
         if (settingsPanel == null || pausePanel == null) return;
@@ -122,21 +108,13 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    // Menü işlemleri
     public void ClosePauseMenu() => ResumeGame();
 
     public void BackMainMenu()
     {
-        // Time scale'i kesinlikle sıfırla
         Time.timeScale = 1f;
+        inputActions?.Disable();
 
-        // Input'ları temizle
-        if (inputActions != null)
-        {
-            inputActions.Disable();
-        }
-
-        // Cursor'u düzelt
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
