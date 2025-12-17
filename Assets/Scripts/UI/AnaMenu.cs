@@ -1,17 +1,23 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class AnaMenu : MonoBehaviour
 {
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject creditsPanel;
 
+    [Header("Loading")]
+    [SerializeField] private LoadingScreenController loadingController;
+
     private void Awake()
     {
         Time.timeScale = 1f;
     }
 
-    public void Play() => SceneManager.LoadScene(1);
+    public void Play()
+    {
+        loadingController.StartLoading();
+    }
+
     public void ExitGame() => Application.Quit();
 
     public void OpenSetPanel() => settingsPanel?.SetActive(true);
