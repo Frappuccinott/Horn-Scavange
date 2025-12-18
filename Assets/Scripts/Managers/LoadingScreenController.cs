@@ -20,8 +20,6 @@ public class LoadingScreenController : MonoBehaviour
     [Header("Sound")]
     [SerializeField] private AudioSource engineSource;
     [SerializeField] private AudioClip engineClip;
-    [SerializeField] private float minPitch = 0.9f;
-    [SerializeField] private float maxPitch = 1.3f;
 
     [Header("Text")]
     [SerializeField] private TMP_Text continueTMP;
@@ -66,8 +64,7 @@ public class LoadingScreenController : MonoBehaviour
 
         PlayEngineSound();
 
-        yield return MoveTruckWithPitch();
-        yield return StopSoundAfterDelay(0.5f);
+        yield return MoveTruck();
         yield return TypeText();
         yield return FadeTextCanvasGroup(0f, 1f, textFadeDuration);
 
@@ -89,7 +86,7 @@ public class LoadingScreenController : MonoBehaviour
         truck.anchoredPosition = truckStartPos;
     }
 
-    private IEnumerator MoveTruckWithPitch()
+    private IEnumerator MoveTruck()
     {
         float elapsed = 0f;
 
@@ -99,7 +96,6 @@ public class LoadingScreenController : MonoBehaviour
             float t = Mathf.SmoothStep(0f, 1f, elapsed / truckMoveDuration);
 
             truck.anchoredPosition = Vector2.Lerp(truckStartPos, truckEndPos, t);
-            engineSource.pitch = Mathf.Lerp(minPitch, maxPitch, t);
 
             yield return null;
         }
@@ -166,19 +162,7 @@ public class LoadingScreenController : MonoBehaviour
     {
         engineSource.clip = engineClip;
         engineSource.loop = true;
-        engineSource.pitch = minPitch;
         engineSource.Play();
-    }
-
-    private IEnumerator StopSoundAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        if (!isDestroying && engineSource != null)
-        {
-            engineSource.Stop();
-            engineSource.pitch = minPitch;
-        }
     }
 
     private IEnumerator Fade(float from, float to)
@@ -210,6 +194,9 @@ public class LoadingScreenController : MonoBehaviour
     {
         isDestroying = true;
 
+        if (engineSource != null && engineSource.isPlaying)
+            engineSource.Stop();
+
         yield return Fade(0f, 1f);
 
         AsyncOperation op = SceneManager.LoadSceneAsync(nextSceneName);
@@ -229,5 +216,8 @@ public class LoadingScreenController : MonoBehaviour
     {
         isDestroying = true;
         StopAllCoroutines();
+
+        if (engineSource != null && engineSource.isPlaying)
+            engineSource.Stop();
     }
 }

@@ -126,12 +126,18 @@ public class AudioManager : MonoBehaviour
             sfxSource.PlayOneShot(clips[Random.Range(0, clips.Length)]);
     }
 
-    public void PlayDubbing(AudioClip clip)
+    public AudioSource PlayDubbing(AudioClip clip)
     {
-        if (!clip) return;
+        if (!clip) return null;
+
         dubbingSource.Stop();
-        dubbingSource.PlayOneShot(clip);
+        dubbingSource.clip = clip;
+        dubbingSource.Play();
+
+        return dubbingSource;
     }
+
+
 
     public void SetMusicVolume(float volume) => SetVolume(MUSIC_PARAM, MUSIC_PREF, volume);
     public void SetSFXVolume(float volume) => SetVolume(SFX_PARAM, SFX_PREF, volume);

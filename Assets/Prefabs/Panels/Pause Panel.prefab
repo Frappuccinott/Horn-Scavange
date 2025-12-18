@@ -174,7 +174,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -254}
+  m_AnchoredPosition: {x: 100, y: -109}
   m_SizeDelta: {x: 143, y: 60}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &5094830349029245478
@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 25441521670191996}
   - component: {fileID: 1753537570251511026}
   m_Layer: 5
-  m_Name: Return Button
+  m_Name: Resume Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -629,7 +629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6148759357473821351
 RectTransform:
   m_ObjectHideFlags: 0
@@ -728,7 +728,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -111}
+  m_AnchoredPosition: {x: 100, y: -258}
   m_SizeDelta: {x: 143, y: 60}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4825307747219393691
@@ -1050,7 +1050,7 @@ GameObject:
   - component: {fileID: 3301406820563849994}
   - component: {fileID: 5461119782268366981}
   m_Layer: 5
-  m_Name: ReturnText
+  m_Name: ResumeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1103,7 +1103,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Return
+  m_text: Resume
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 780ea48647586ca4f8e42cd3694bdf67, type: 2}
   m_sharedMaterial: {fileID: 8346789270113665644, guid: 780ea48647586ca4f8e42cd3694bdf67, type: 2}
