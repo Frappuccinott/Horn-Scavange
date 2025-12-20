@@ -15855,10 +15855,10 @@ MonoBehaviour:
     count: 1
     text: {fileID: 811743574}
   - type: 1
-    count: 1
+    count: 3
     text: {fileID: 368714240}
   - type: 0
-    count: 1
+    count: 8
     text: {fileID: 1383645183}
 --- !u!1 &686974419
 GameObject:
@@ -52634,7 +52634,7 @@ Transform:
   m_GameObject: {fileID: 9086903974378258971}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.98, y: -16.86, z: 0}
+  m_LocalPosition: {x: -6.65, y: -16.86, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -52808,7 +52808,7 @@ Transform:
   m_GameObject: {fileID: 3513787884843999409}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.46, y: -22.41, z: 0}
+  m_LocalPosition: {x: 19.7, y: -19.97, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
