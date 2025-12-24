@@ -8,6 +8,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject ingamePanel;
+    [SerializeField] private GameObject controlsPanel;
 
     private bool isPaused;
     private bool pauseWasActiveBeforeSettings;
@@ -120,6 +121,9 @@ public class PauseMenu : MonoBehaviour
 
         SceneManager.LoadScene(0);
     }
+
+    public void OpenControlsPanel() => controlsPanel.SetActive(true);
+    public void CloseControlsPanel() => controlsPanel.SetActive(false);
 
     public void QuitGame()
     {
