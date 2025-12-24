@@ -34,7 +34,13 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 67826279c3186254a83ae0f46a32548d
+    name: Dubbing
+  - guid: c4ca1f536ae52794d81b5722a6ae897e
+    name: Music
+  - guid: cc92799dba04c6d47a27c52e52d62456
+    name: SFX
   m_AudioMixerGroupViews:
   - guids:
     - dff713e0461e58e4aabef4ff73994521
@@ -54,9 +60,9 @@ AudioMixerGroupController:
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: dff713e0461e58e4aabef4ff73994521
   m_Children:
+  - {fileID: -3358067758417115203}
   - {fileID: 6460264775548179940}
   - {fileID: 7085250393448983492}
-  - {fileID: -3358067758417115203}
   m_Volume: 5df6ed177e894b64c84952030ec47753
   m_Pitch: c897e2860ab9c084f8860cabd8e6650d
   m_Send: 00000000000000000000000000000000
@@ -89,7 +95,10 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 20dcf928f4b1f834aa1328b742e26559
-  m_FloatValues: {}
+  m_FloatValues:
+    c4ca1f536ae52794d81b5722a6ae897e: 0
+    67826279c3186254a83ae0f46a32548d: 0
+    cc92799dba04c6d47a27c52e52d62456: 0
   m_TransitionOverrides: {}
 --- !u!244 &1282155034699462093
 AudioMixerEffectController:

@@ -9,7 +9,6 @@ public class CharacterMovement : MonoBehaviour
     private float originalSpeed;
     private Rigidbody2D rb;
     private Animator anim;
-
     private Vector2 movement;
     private Vector2 lastMovement;
 
@@ -20,7 +19,7 @@ public class CharacterMovement : MonoBehaviour
         originalSpeed = moveSpeed;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        lastMovement = Vector2.down; // başlangıç yönü
+        lastMovement = Vector2.down;
     }
 
     private void Update()
@@ -29,20 +28,15 @@ public class CharacterMovement : MonoBehaviour
 
         movement = InputManager.controls.Character.Move.ReadValue<Vector2>();
 
-        // Deadzone
         if (movement.magnitude < deadZone)
             movement = Vector2.zero;
 
-        // Hareket varsa yönü kaydet
         if (movement != Vector2.zero)
             lastMovement = movement.normalized;
 
-        // MOVE TREE
         anim.SetFloat("moveX", movement.x);
         anim.SetFloat("moveY", movement.y);
         anim.SetFloat("speed", movement.magnitude);
-
-        // IDLE TREE (son bakılan yön)
         anim.SetFloat("idleX", lastMovement.x);
         anim.SetFloat("idleY", lastMovement.y);
     }

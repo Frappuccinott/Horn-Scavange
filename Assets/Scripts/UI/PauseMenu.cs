@@ -1,83 +1,94 @@
-using UnityEngine;
+ï»¿using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    [Header("Panel Referanslarý")]
-    public GameObject pausePanel;
-    public GameObject settingsPanel;
+    [Header("Panel ReferanslarÄ±")]
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private GameObject ingamePanel;
 
+    private bool isPaused;
+    private bool pauseWasActiveBeforeSettings;
+    private CharacterControls inputActions;
+    private InputAction pauseAction;
 
-    private bool isPaused = false;
-    private bool pauseWasActiveBeforeSettings = false;
-
-    void Start()
+    private void Awake()
     {
-        if (pausePanel != null) pausePanel.SetActive(false);
-        if (settingsPanel != null) settingsPanel.SetActive(false);
-
+        inputActions = new CharacterControls();
+        pauseAction = inputActions.UI.Pause;
         Time.timeScale = 1f;
-        isPaused = false;
     }
 
-    void Update()
+    private void OnEnable()
     {
-        bool escPressed = false;
-
-        if (!escPressed)
-            escPressed = Input.GetKeyUp(KeyCode.Escape);
-        if (escPressed)
-        {
-            // Önce ayarlar açýksa onu kapat
-            if (settingsPanel != null && !settingsPanel.activeSelf)
-            {
-                CloseSettings();
-                return;
-            }
-
-            // Deðilse pause aç/kapat
-            if (isPaused)
-                ResumeGame();
-
-            else
-                PauseGame();
-        }
+        pauseAction.Enable();
+        pauseAction.performed += OnPausePressed;
     }
 
-       public void PauseGame()
+    private void OnDisable()
+    {
+        pauseAction.performed -= OnPausePressed;
+        pauseAction.Disable();
+    }
+
+    private void Start()
+    {
+        pausePanel?.SetActive(false);
+        settingsPanel?.SetActive(false);
+        SetPauseState(false);
+    }
+
+    private void OnPausePressed(InputAction.CallbackContext context)
+    {
+        if (settingsPanel != null && settingsPanel.activeSelf)
+        {
+            CloseSettings();
+            return;
+        }
+
+        if (isPaused)
+            ResumeGame();
+        else
+            PauseGame();
+    }
+
+    private void SetPauseState(bool pause)
+    {
+        Time.timeScale = pause ? 0f : 1f;
+        isPaused = pause;
+
+        Cursor.visible = pause;
+        Cursor.lockState = pause ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    public void PauseGame()
     {
         if (pausePanel == null) return;
 
         pausePanel.SetActive(true);
-        if (settingsPanel != null) settingsPanel.SetActive(false);
-
-        Time.timeScale = 0f;
-        isPaused = true;
+        settingsPanel?.SetActive(false);
+        ingamePanel?.SetActive(false);
+        SetPauseState(true);
     }
 
     public void ResumeGame()
     {
-        if (pausePanel != null) pausePanel.SetActive(false);
-        if (settingsPanel != null) settingsPanel.SetActive(false);
-
-        Time.timeScale = 1f;
-        isPaused = false;
+        pausePanel?.SetActive(false);
+        settingsPanel?.SetActive(false);
+        ingamePanel?.SetActive(true);
+        SetPauseState(false);
     }
+
     public void OpenSettings()
     {
-        Debug.Log("Settings panel açýlýyor..."); // Konsolda kontrol et
-        if (settingsPanel == null || pausePanel == null)
-        {
-            Debug.LogWarning("Settings veya Pause panel referansý eksik!");
-            return;
-        }
+        if (settingsPanel == null || pausePanel == null) return;
 
         pauseWasActiveBeforeSettings = pausePanel.activeSelf;
-
         pausePanel.SetActive(false);
         settingsPanel.SetActive(true);
         settingsPanel.transform.SetAsLastSibling();
-
-        Debug.Log("Settings panel aktif: " + settingsPanel.activeSelf);
     }
 
     public void CloseSettings()
@@ -89,23 +100,33 @@ public class PauseMenu : MonoBehaviour
         if (pauseWasActiveBeforeSettings)
         {
             pausePanel.SetActive(true);
-            isPaused = true;
-            Time.timeScale = 0f;
+            SetPauseState(true);
         }
         else
         {
-            isPaused = false;
-            Time.timeScale = 1f;
+            SetPauseState(false);
         }
+    }
+
+    public void ClosePauseMenu() => ResumeGame();
+
+    public void BackMainMenu()
+    {
+        Time.timeScale = 1f;
+        inputActions?.Disable();
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        SceneManager.LoadScene(0);
     }
 
     public void QuitGame()
     {
-        Debug.Log("Oyun kapatýldý!");
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
-
 }
-
-
-

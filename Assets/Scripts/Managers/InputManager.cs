@@ -2,39 +2,14 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    private static InputManager _instance;
-    private static CharacterControls _controls;
+    public static CharacterControls controls;
 
-    public static CharacterControls controls => _controls;
-
-    private void Awake()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Init()
     {
-        // Singleton pattern
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        if (controls != null) return;
 
-        _instance = this;
-        DontDestroyOnLoad(gameObject);
-
-        // Initialize input controls
-        _controls = new CharacterControls();
-    }
-
-    private void OnEnable()
-    {
-        _controls?.Character.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _controls?.Character.Disable();
-    }
-
-    private void OnDestroy()
-    {
-        _controls?.Dispose();
+        controls = new CharacterControls();
+        controls.Character.Enable();
     }
 }

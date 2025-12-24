@@ -7,46 +7,28 @@ public class CharacterInteract : MonoBehaviour
 
     private void OnEnable()
     {
-        if (InputManager.controls == null) return;
-
-        // Unsubscribe first to prevent duplicate subscriptions
-        InputManager.controls.Character.Interact.started -= OnInteract;
-        InputManager.controls.Character.Interact.started += OnInteract;
+        if (InputManager.controls != null)
+        {
+            InputManager.controls.Character.Interact.performed += OnInteract;
+        }
     }
 
     private void OnDisable()
     {
-        if (InputManager.controls == null) return;
-        InputManager.controls.Character.Interact.started -= OnInteract;
+        if (InputManager.controls != null)
+        {
+            InputManager.controls.Character.Interact.performed -= OnInteract;
+        }
     }
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        if (currentTarget != null)
-        {
-            currentTarget.Interact();
-        }
-    }
-
-    // Fallback input method for testing
-    private void Update()
-    {
-        if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
-        {
-            if (currentTarget != null)
-            {
-                currentTarget.Interact();
-            }
-        }
+        currentTarget?.Interact();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check for ICollectable in: self -> parent -> children
-        var collectible = collision.GetComponent<ICollectable>()
-                       ?? collision.GetComponentInParent<ICollectable>()
-                       ?? collision.GetComponentInChildren<ICollectable>();
-
+        ICollectable collectible = GetCollectible(collision);
         if (collectible != null)
         {
             currentTarget = collectible;
@@ -55,15 +37,17 @@ public class CharacterInteract : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        // Check for ICollectable in: self -> parent -> children
-        var collectible = collision.GetComponent<ICollectable>()
-                       ?? collision.GetComponentInParent<ICollectable>()
-                       ?? collision.GetComponentInChildren<ICollectable>();
-
-        // Clear target only if it matches the exiting collider
+        ICollectable collectible = GetCollectible(collision);
         if (collectible != null && collectible == currentTarget)
         {
             currentTarget = null;
         }
+    }
+
+    private ICollectable GetCollectible(Collider2D collision)
+    {
+        return collision.GetComponent<ICollectable>()
+            ?? collision.GetComponentInParent<ICollectable>()
+            ?? collision.GetComponentInChildren<ICollectable>();
     }
 }

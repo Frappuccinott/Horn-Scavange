@@ -1,40 +1,27 @@
-using System;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
+
 public class AnaMenu : MonoBehaviour
 {
-    public GameObject SettingsPanel;
-    public GameObject CreditsPanel;
+    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private GameObject creditsPanel;
 
-    public void ExitGame()
+    [Header("Loading")]
+    [SerializeField] private LoadingScreenController loadingController;
+
+    private void Awake()
     {
-        Application.Quit();
+        Time.timeScale = 1f;
     }
 
     public void Play()
     {
-        SceneManager.LoadScene("Game");
+        loadingController.StartLoading();
     }
 
-    public void OpenSetPanel()
-    {
-        SettingsPanel.SetActive(true);
-    }
+    public void ExitGame() => Application.Quit();
 
-    public void CloseSetPanel()
-    {
-        SettingsPanel.SetActive(false);
-    }
-
-    public void OpenCreditsPanel()
-    {
-        CreditsPanel.SetActive(true);
-    }
-
-    public void CloseCreditsPanel()
-    {
-        CreditsPanel.SetActive(false);
-    }
-
+    public void OpenSetPanel() => settingsPanel?.SetActive(true);
+    public void CloseSetPanel() => settingsPanel?.SetActive(false);
+    public void OpenCreditsPanel() => creditsPanel?.SetActive(true);
+    public void CloseCreditsPanel() => creditsPanel?.SetActive(false);
 }
-   
