@@ -28,6 +28,7 @@ public class AudioManager : MonoBehaviour
     private AudioSource sfxSource;
     private AudioSource dubbingSource;
     private Coroutine musicRoutine;
+    private Coroutine fadeRoutine;
     private List<AudioClip> musicPool = new();
 
     private const string MUSIC_PARAM = "Music";
@@ -58,12 +59,20 @@ public class AudioManager : MonoBehaviour
     private void OnDestroy()
     {
         if (musicRoutine != null) StopCoroutine(musicRoutine);
+        if (fadeRoutine != null) StopCoroutine(fadeRoutine);
         if (Instance == this) Instance = null;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != "AnaMenu") StartLevelMusic();
+        if (scene.name == "AnaMenu")
+        {
+            StopLevelMusic();
+        }
+        else
+        {
+            StartLevelMusic();
+        }
     }
 
     private void CreateSources()
@@ -79,6 +88,23 @@ public class AudioManager : MonoBehaviour
         source.outputAudioMixerGroup = group;
         source.playOnAwake = false;
         return source;
+    }
+
+    private void StopLevelMusic()
+    {
+        if (musicRoutine != null)
+        {
+            StopCoroutine(musicRoutine);
+            musicRoutine = null;
+        }
+
+        if (musicSource != null)
+        {
+            musicSource.Stop();
+            musicSource.clip = null;
+        }
+
+        musicPool.Clear();
     }
 
     private void StartLevelMusic()
@@ -106,6 +132,29 @@ public class AudioManager : MonoBehaviour
 
             yield return new WaitForSeconds(clip.length);
         }
+    }
+
+    public void FadeOutMusic(float duration)
+    {
+        if (fadeRoutine != null) StopCoroutine(fadeRoutine);
+        fadeRoutine = StartCoroutine(FadeOutMusicRoutine(duration));
+    }
+
+    private IEnumerator FadeOutMusicRoutine(float duration)
+    {
+        float startVolume = musicSource.volume;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            musicSource.volume = Mathf.Lerp(startVolume, 0f, elapsed / duration);
+            yield return null;
+        }
+
+        musicSource.volume = 0f;
+        musicSource.Stop();
+        musicSource.volume = startVolume;
     }
 
     public void PlayUIClick() => PlaySFX(uiClickSound);
@@ -136,8 +185,6 @@ public class AudioManager : MonoBehaviour
 
         return dubbingSource;
     }
-
-
 
     public void SetMusicVolume(float volume) => SetVolume(MUSIC_PARAM, MUSIC_PREF, volume);
     public void SetSFXVolume(float volume) => SetVolume(SFX_PARAM, SFX_PREF, volume);

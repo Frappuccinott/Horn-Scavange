@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 5094830349029245478}
   - component: {fileID: 5897606866360383782}
   - component: {fileID: 6001049838777630453}
+  - component: {fileID: 8619678542498346627}
   m_Layer: 5
   m_Name: Settings Button
   m_TagString: Untagged
@@ -271,6 +272,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8619678542498346627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3011175662735158760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f118254eedc62841938b0e25e523129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SelectableHighlight
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineDistance: {x: 8, y: 8}
 --- !u!1 &3911357145277177157
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,6 +373,7 @@ GameObject:
   - component: {fileID: 821752833401320694}
   - component: {fileID: 7661726761782978298}
   - component: {fileID: 4820235736389160883}
+  - component: {fileID: 787829173453055840}
   m_Layer: 5
   m_Name: Close Pause Button
   m_TagString: Untagged
@@ -479,6 +495,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &787829173453055840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4121057057453538311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f118254eedc62841938b0e25e523129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SelectableHighlight
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineDistance: {x: 12, y: 12}
 --- !u!1 &4829586337738596233
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,6 +521,7 @@ GameObject:
   - component: {fileID: 3115879582994829377}
   - component: {fileID: 25441521670191996}
   - component: {fileID: 1753537570251511026}
+  - component: {fileID: 4794797770265322891}
   m_Layer: 5
   m_Name: Resume Button
   m_TagString: Untagged
@@ -612,6 +643,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4794797770265322891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4829586337738596233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f118254eedc62841938b0e25e523129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SelectableHighlight
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineDistance: {x: 8, y: 8}
 --- !u!1 &6015594148822434883
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,6 +668,7 @@ GameObject:
   - component: {fileID: 6148759357473821351}
   - component: {fileID: 5844456201272959823}
   - component: {fileID: 6184439819142150152}
+  - component: {fileID: 2293639681556023543}
   m_Layer: 5
   m_Name: Pause Panel
   m_TagString: Untagged
@@ -645,8 +691,8 @@ RectTransform:
   - {fileID: 8659703229373082305}
   - {fileID: 5905200557506018931}
   - {fileID: 768476032806198454}
-  - {fileID: 4327019713280349276}
   - {fileID: 3017423529853896417}
+  - {fileID: 4327019713280349276}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -692,6 +738,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2293639681556023543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6015594148822434883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cf9807c8fb06fd4d9475f847070e54d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoSelectFirstButton
+  firstSelectedButton: {fileID: 4829586337738596233}
+  selectPreviousMenuOnDisable: 0
+  previousMenu: {fileID: 0}
 --- !u!1 &6029329641462626529
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,6 +765,7 @@ GameObject:
   - component: {fileID: 4825307747219393691}
   - component: {fileID: 5001869899686631465}
   - component: {fileID: 4825494042020283026}
+  - component: {fileID: 3886239302745082501}
   m_Layer: 5
   m_Name: Main Menu Button
   m_TagString: Untagged
@@ -825,6 +887,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3886239302745082501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6029329641462626529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f118254eedc62841938b0e25e523129, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SelectableHighlight
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineDistance: {x: 8, y: 8}
 --- !u!1 &6101700078643435080
 GameObject:
   m_ObjectHideFlags: 0
