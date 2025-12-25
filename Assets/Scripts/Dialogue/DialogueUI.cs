@@ -10,13 +10,11 @@ public class DialogueUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI characterNameText;
 
-
-
     [Header("Animation Settings")]
     [SerializeField] private float fadeSpeed = 5f;
 
     private CanvasGroup canvasGroup;
-    private Image fillImage; // Soldan saða dolacak image
+    private Image fillImage;
 
     private void Awake()
     {
@@ -27,15 +25,12 @@ public class DialogueUI : MonoBehaviour
                 canvasGroup = dialoguePanel.AddComponent<CanvasGroup>();
         }
 
-        // Fill image için child oluþtur
         CreateFillImageIfNeeded();
-
         HideDialogue();
     }
 
     private void CreateFillImageIfNeeded()
     {
-        // Eðer zaten varsa kontrol et
         Transform existingFill = dialoguePanel?.transform.Find("FillImage");
         if (existingFill != null)
         {
@@ -43,21 +38,19 @@ public class DialogueUI : MonoBehaviour
             return;
         }
 
-        // Yoksa oluþtur
         if (dialoguePanel != null)
         {
             GameObject fillObj = new GameObject("FillImage");
             fillObj.transform.SetParent(dialoguePanel.transform, false);
-            fillObj.transform.SetAsFirstSibling(); // En arkada olsun
+            fillObj.transform.SetAsFirstSibling();
 
             fillImage = fillObj.AddComponent<Image>();
-            fillImage.color = new Color(1, 1, 1, 0.1f); // Hafif beyaz
+            fillImage.color = new Color(1, 1, 1, 0.1f);
             fillImage.type = Image.Type.Filled;
             fillImage.fillMethod = Image.FillMethod.Horizontal;
             fillImage.fillOrigin = (int)Image.OriginHorizontal.Left;
             fillImage.fillAmount = 0f;
 
-            // RectTransform ayarla - panelin tamamýný kaplasýn
             RectTransform fillRect = fillImage.GetComponent<RectTransform>();
             fillRect.anchorMin = Vector2.zero;
             fillRect.anchorMax = Vector2.one;
