@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0880a5141c93d545a4660c6608df4aa, type: 3}
+  m_Name: Suspect_Dialogue
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  dialogueLines:
+  - characterName: Ulvi
+    dialogueText: This brother looks like someone in charge, does he know the location
+      of the piiiece of the horn.
+    voiceClip: {fileID: 8300000, guid: 444a8f17ed5def343bcb11764c10c8a2, type: 3}
+    delayAfterLine: 0.4
+  - characterName: Nervous Looking Man
+    dialogueText: You see that drain pipe down there?
+    voiceClip: {fileID: 8300000, guid: 5e07bd2715bb1684ea581fbe63858050, type: 3}
+    delayAfterLine: 0.4

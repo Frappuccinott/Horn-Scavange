@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4935485331038519607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8339963826963640380}
+  - component: {fileID: 6296227490010130473}
+  - component: {fileID: 594221074953723456}
+  - component: {fileID: 618348259652123244}
+  - component: {fileID: 4360341260319820360}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8339963826963640380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935485331038519607}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.51357, y: 6.37251, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6296227490010130473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935485331038519607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46334f9e647f97749be28e014bcf8dda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputManager
+--- !u!114 &594221074953723456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935485331038519607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6298032d30ee34eb0935d897a913b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  mixer: {fileID: 24100000, guid: 430a193e5613bde44a2dc82e1ef5944d, type: 2}
+  musicGroup: {fileID: -3358067758417115203, guid: 430a193e5613bde44a2dc82e1ef5944d, type: 2}
+  sfxGroup: {fileID: 6460264775548179940, guid: 430a193e5613bde44a2dc82e1ef5944d, type: 2}
+  dubbingGroup: {fileID: 7085250393448983492, guid: 430a193e5613bde44a2dc82e1ef5944d, type: 2}
+  mainMenuMusic: {fileID: 8300000, guid: 717823c8b6d33864581a85cc03a79833, type: 3}
+  uiClickSound: {fileID: 8300000, guid: 73334b3afa384934b8abb1c50b21210a, type: 3}
+  instantTrashPickups:
+  - {fileID: 8300000, guid: cc007292cb4de0348ac3de71338a8746, type: 3}
+  - {fileID: 8300000, guid: 28e28ec11925d5348ad3a14f17e42823, type: 3}
+  - {fileID: 8300000, guid: b04452080d6817841a49912d8b1e865a, type: 3}
+  - {fileID: 8300000, guid: 2f18ada315d20224f84dd28414f216cb, type: 3}
+  - {fileID: 8300000, guid: 36a03cb8f6ebc7b489d2c47fcbff895f, type: 3}
+  - {fileID: 8300000, guid: 3ee96d9cad1bad04187d17fea09e79cd, type: 3}
+  carryTrashPickups:
+  - {fileID: 8300000, guid: cc007292cb4de0348ac3de71338a8746, type: 3}
+  - {fileID: 8300000, guid: b04452080d6817841a49912d8b1e865a, type: 3}
+  - {fileID: 8300000, guid: 36a03cb8f6ebc7b489d2c47fcbff895f, type: 3}
+  - {fileID: 8300000, guid: 3ee96d9cad1bad04187d17fea09e79cd, type: 3}
+  carryTrashDelivers:
+  - {fileID: 8300000, guid: 9a8b7ffc9297d5244803153c1149aab5, type: 3}
+  - {fileID: 8300000, guid: ac5766da188d001478ce5e15c2496394, type: 3}
+  - {fileID: 8300000, guid: dee62f5ee52c6e041bb049219933dccf, type: 3}
+  - {fileID: 8300000, guid: b064ca6a4554e2740b0790dff7fab58a, type: 3}
+  goldenHornPickup: {fileID: 8300000, guid: e873d77fb6433e74a922c2b6c9bb7e73, type: 3}
+  cannotPickupSound: {fileID: 8300000, guid: 8396871637b4d4347b543d5f46464309, type: 3}
+--- !u!114 &618348259652123244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935485331038519607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39ca6bd43196e6d498599989ac1f6661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CollectableTaskManager
+  firstTrashDubbing: {fileID: 8300000, guid: f88c0fbea21e1f94a87f01388eb2a12a, type: 3}
+  goldenHornDubbing: {fileID: 8300000, guid: 8c688cdf39438b74aac38df2ef169c05, type: 3}
+  tasks:
+  - type: 2
+    count: 1
+    text: {fileID: 0}
+  - type: 0
+    count: 2
+    text: {fileID: 0}
+  - type: 1
+    count: 2
+    text: {fileID: 0}
+--- !u!114 &4360341260319820360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935485331038519607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a22e6044e5ca5644941127a6cec8b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelMusic
+  musicClips:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
