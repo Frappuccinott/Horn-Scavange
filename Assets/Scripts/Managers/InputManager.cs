@@ -11,5 +11,24 @@ public class InputManager : MonoBehaviour
 
         controls = new CharacterControls();
         controls.Character.Enable();
+        controls.Minigame.Enable();
+    }
+
+    private void OnEnable()
+    {
+        if (controls != null)
+        {
+            controls.Character.Enable();
+            controls.Minigame.Enable();
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (controls != null)
+        {
+            controls.Character.Disable();
+            controls.Minigame.Disable();
+        }
     }
 }

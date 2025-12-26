@@ -1011,6 +1011,76 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Minigame",
+            "id": "9a763654-30ae-4b8b-9e37-0946f0355170",
+            "actions": [
+                {
+                    "name": "CursorMove",
+                    "type": "Value",
+                    "id": "00231993-95a5-4cd1-906f-a6448c624bea",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "MinigameInteract",
+                    "type": "Button",
+                    "id": "1446d1b0-e08a-4bd5-a7eb-9fb88a22a8c0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c9d1692c-b447-4dd1-b1ad-424ee0629f11",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "CursorMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "01ad53e6-87c3-48a0-a094-ac371c06c2f5",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "CursorMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bdde1837-43b6-49ad-8689-75bce4804b1d",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "MinigameInteract",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1f7ceb0c-5fe4-4e78-b20c-6f4e7f0a1f62",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MinigameInteract",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

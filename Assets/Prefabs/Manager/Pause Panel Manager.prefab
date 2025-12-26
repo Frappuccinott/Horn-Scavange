@@ -48,5 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c50e9be92551949b9ede21b7a044af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
-  pausePanel: {fileID: 0}
-  settingsPanel: {fileID: 0}
+  pausePanel: {fileID: 6015594148822434883, guid: b8d119323d069b847b472b7f1fa1d93f, type: 3}
+  settingsPanel: {fileID: 2977968896531501805, guid: 507ab3305948b32448f0f1e3e56b24f5, type: 3}
+  ingamePanel: {fileID: 0}
+  controlsPanel: {fileID: 6725978015312859409, guid: 9e6f332039733ec49be6c9e5a4f89ef7, type: 3}
