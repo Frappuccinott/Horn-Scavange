@@ -1868,7 +1868,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 91, y: -113}
-  m_SizeDelta: {x: 909.02, y: 593.3737}
+  m_SizeDelta: {x: 900, y: 700}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1488046602
 MonoBehaviour:
@@ -1890,9 +1890,24 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Muhammed Burak Ozbek: Game Designer\n\r\nYigit Ayd\u0131n: Level Designer\r\n\nTugba
-    Akgun: 2D Artist\n\nMehmet Emin Coban: Lead Developer\n\nArda Oktar: Developer\n\nBerkay
-    Isik: Music & Sound Design"
+  m_text: 'Muhammed Burak OZBEK: Game Designer
+
+
+    Yigit AYDIN: Level Designer
+
+
+    Tugba
+    AKGUN: 2D Artist
+
+
+    Mehmet Emin COBAN: Lead Developer
+
+
+    Arda OKTAR: Developer
+
+
+    Berkay
+    ISIK: Music & Sound Design'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 780ea48647586ca4f8e42cd3694bdf67, type: 2}
   m_sharedMaterial: {fileID: 8346789270113665644, guid: 780ea48647586ca4f8e42cd3694bdf67, type: 2}
