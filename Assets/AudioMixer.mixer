@@ -37,6 +37,8 @@ AudioMixerController:
   m_ExposedParameters:
   - guid: 67826279c3186254a83ae0f46a32548d
     name: Dubbing
+  - guid: 5df6ed177e894b64c84952030ec47753
+    name: Master
   - guid: c4ca1f536ae52794d81b5722a6ae897e
     name: Music
   - guid: cc92799dba04c6d47a27c52e52d62456

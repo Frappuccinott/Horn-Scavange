@@ -343,6 +343,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterMovement
   moveSpeed: 3.5
+  footstepSounds:
+  - {fileID: 8300000, guid: 1d8e835c0bf7ef7459718a54eee872a7, type: 3}
+  - {fileID: 8300000, guid: 5d12461ad7ab5854393e3efa132b3143, type: 3}
+  - {fileID: 8300000, guid: 44a4745239a6f2f4187af06c1604fedf, type: 3}
+  - {fileID: 8300000, guid: 9230481a293d844489dbf9b210bdc027, type: 3}
+  - {fileID: 8300000, guid: 30501c7ef967d4c4dbc9f66092596225, type: 3}
+  - {fileID: 8300000, guid: 8a737cda3ae3b6a41aabc5f448d945e7, type: 3}
+  - {fileID: 8300000, guid: 695f3394cc09f0342887667a981f7303, type: 3}
+  footstepInterval: 0.35
+  minSpeedForFootsteps: 0.01
 --- !u!114 &562736981951716265
 MonoBehaviour:
   m_ObjectHideFlags: 0

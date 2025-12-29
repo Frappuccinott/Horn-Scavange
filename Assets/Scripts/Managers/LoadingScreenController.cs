@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using TMPro;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class LoadingScreenController : MonoBehaviour
 {
@@ -20,7 +21,6 @@ public class LoadingScreenController : MonoBehaviour
     [Header("Sound")]
     [SerializeField] private AudioSource engineSource;
     [SerializeField] private AudioClip engineClip;
-    [SerializeField] private float musicFadeOutDuration = 1f;
 
     [Header("Text")]
     [SerializeField] private TMP_Text continueTMP;
@@ -36,7 +36,6 @@ public class LoadingScreenController : MonoBehaviour
     private bool canContinue;
     private bool blinkText;
     private bool isDestroying;
-    private bool interactSubscribed;
 
     private readonly Vector2 truckStartPos = new(-390, -150);
     private readonly Vector2 truckEndPos = new(1550, -150);
@@ -48,37 +47,27 @@ public class LoadingScreenController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (InputManager.controls == null) return;
-
         InputManager.controls.Character.Interact.performed += OnInteract;
-        interactSubscribed = true;
     }
 
     private void OnDisable()
     {
-        if (!interactSubscribed || InputManager.controls == null) return;
-
         InputManager.controls.Character.Interact.performed -= OnInteract;
-        interactSubscribed = false;
     }
 
     public void StartLoading()
     {
-        if (!gameObject.activeInHierarchy)
-            gameObject.SetActive(true);
+        InputManager.InputHelper.DisableAll();
+        EventSystem.current.sendNavigationEvents = false;
+        EventSystem.current.SetSelectedGameObject(null);
 
+        gameObject.SetActive(true);
         StartCoroutine(LoadingSequence());
     }
 
+
     private IEnumerator LoadingSequence()
     {
-        // Müziği fade out ile durdur
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.FadeOutMusic(musicFadeOutDuration);
-
-        if (AnaMenuAudioManager.Instance != null)
-            StartCoroutine(FadeOutAnaMenuMusic(musicFadeOutDuration));
-
         ResetState();
 
         yield return Fade(0f, 1f);
@@ -96,32 +85,10 @@ public class LoadingScreenController : MonoBehaviour
         blinkText = true;
         StartCoroutine(BlinkText());
 
+        // 🎮 SADECE Character aktif
+        InputManager.InputHelper.EnableCharacter();
+
         canContinue = true;
-    }
-
-    private IEnumerator FadeOutAnaMenuMusic(float duration)
-    {
-        if (AnaMenuAudioManager.Instance == null) yield break;
-
-        AudioSource musicSource = AnaMenuAudioManager.Instance.GetComponent<AudioSource>();
-        if (musicSource == null) yield break;
-
-        float startVolume = musicSource.volume;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            if (musicSource == null) yield break;
-            elapsed += Time.deltaTime;
-            musicSource.volume = Mathf.Lerp(startVolume, 0f, elapsed / duration);
-            yield return null;
-        }
-
-        if (musicSource != null)
-        {
-            musicSource.volume = 0f;
-            musicSource.Stop();
-        }
     }
 
     private void ResetState()
@@ -148,8 +115,7 @@ public class LoadingScreenController : MonoBehaviour
             yield return null;
         }
 
-        if (!isDestroying)
-            truck.anchoredPosition = truckEndPos;
+        truck.anchoredPosition = truckEndPos;
     }
 
     private IEnumerator TypeText()
@@ -158,7 +124,6 @@ public class LoadingScreenController : MonoBehaviour
 
         foreach (char c in continueMessage)
         {
-            if (isDestroying) yield break;
             continueTMP.text += c;
             yield return new WaitForSeconds(typingSpeed);
         }
@@ -168,26 +133,24 @@ public class LoadingScreenController : MonoBehaviour
     {
         float elapsed = 0f;
 
-        while (elapsed < duration && !isDestroying)
+        while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             textCanvasGroup.alpha = Mathf.Lerp(from, to, elapsed / duration);
             yield return null;
         }
 
-        if (!isDestroying)
-            textCanvasGroup.alpha = to;
+        textCanvasGroup.alpha = to;
     }
 
     private IEnumerator BlinkText()
     {
-        float halfBlink = blinkSpeed * 0.5f;
+        float half = blinkSpeed * 0.5f;
 
-        while (blinkText && !isDestroying)
+        while (blinkText)
         {
-            yield return FadeTMPAlpha(1f, 0f, halfBlink);
-            if (!blinkText || isDestroying) break;
-            yield return FadeTMPAlpha(0f, 1f, halfBlink);
+            yield return FadeTMPAlpha(1f, 0f, half);
+            yield return FadeTMPAlpha(0f, 1f, half);
         }
     }
 
@@ -195,15 +158,14 @@ public class LoadingScreenController : MonoBehaviour
     {
         float elapsed = 0f;
 
-        while (elapsed < duration && !isDestroying)
+        while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             continueTMP.alpha = Mathf.Lerp(from, to, elapsed / duration);
             yield return null;
         }
 
-        if (!isDestroying)
-            continueTMP.alpha = to;
+        continueTMP.alpha = to;
     }
 
     private void PlayEngineSound()
@@ -219,18 +181,17 @@ public class LoadingScreenController : MonoBehaviour
     {
         float elapsed = 0f;
 
-        while (elapsed < fadeDuration && !isDestroying)
+        while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
             fadeGroup.alpha = Mathf.Lerp(from, to, elapsed / fadeDuration);
             yield return null;
         }
 
-        if (!isDestroying)
-            fadeGroup.alpha = to;
+        fadeGroup.alpha = to;
     }
 
-    private void OnInteract(InputAction.CallbackContext context)
+    private void OnInteract(InputAction.CallbackContext ctx)
     {
         if (!canContinue || isDestroying) return;
 
@@ -243,7 +204,7 @@ public class LoadingScreenController : MonoBehaviour
     {
         isDestroying = true;
 
-        if (engineSource != null && engineSource.isPlaying)
+        if (engineSource != null)
             engineSource.Stop();
 
         yield return Fade(0f, 1f);
@@ -255,18 +216,15 @@ public class LoadingScreenController : MonoBehaviour
             yield return null;
 
         op.allowSceneActivation = true;
-        yield return new WaitForSeconds(0.1f);
 
-        if (this != null && gameObject != null)
-            Destroy(gameObject);
+        Destroy(gameObject);
     }
 
     private void OnDestroy()
     {
-        isDestroying = true;
         StopAllCoroutines();
 
-        if (engineSource != null && engineSource.isPlaying)
+        if (engineSource != null)
             engineSource.Stop();
     }
 }

@@ -16,9 +16,9 @@ MonoBehaviour:
   - characterName: Ulvi
     dialogueText: This brother looks like someone in charge, does he know the location
       of the piiiece of the horn.
-    voiceClip: {fileID: 8300000, guid: 444a8f17ed5def343bcb11764c10c8a2, type: 3}
+    voiceClip: {fileID: 8300000, guid: 8cccb5ef81c6d244d996c0c1f7070042, type: 3}
     delayAfterLine: 0.4
   - characterName: Nervous Looking Man
     dialogueText: You see that drain pipe down there?
-    voiceClip: {fileID: 8300000, guid: 5e07bd2715bb1684ea581fbe63858050, type: 3}
+    voiceClip: {fileID: 8300000, guid: 8cccb5ef81c6d244d996c0c1f7070042, type: 3}
     delayAfterLine: 0.4

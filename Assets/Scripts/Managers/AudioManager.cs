@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -28,7 +27,6 @@ public class AudioManager : MonoBehaviour
     private AudioSource sfxSource;
     private AudioSource dubbingSource;
     private Coroutine musicRoutine;
-    private Coroutine fadeRoutine;
     private List<AudioClip> musicPool = new();
 
     private const string MUSIC_PARAM = "Music";
@@ -49,30 +47,19 @@ public class AudioManager : MonoBehaviour
 
         Instance = this;
         CreateSources();
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad YOK - Her level kendi AudioManager'ını kullanıyor
     }
 
-    private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
-    private void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
-    private void Start() => LoadAudioSettings();
+    private void Start()
+    {
+        LoadAudioSettings();
+        StartLevelMusic();
+    }
 
     private void OnDestroy()
     {
         if (musicRoutine != null) StopCoroutine(musicRoutine);
-        if (fadeRoutine != null) StopCoroutine(fadeRoutine);
         if (Instance == this) Instance = null;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "AnaMenu")
-        {
-            StopLevelMusic();
-        }
-        else
-        {
-            StartLevelMusic();
-        }
     }
 
     private void CreateSources()
@@ -90,27 +77,8 @@ public class AudioManager : MonoBehaviour
         return source;
     }
 
-    private void StopLevelMusic()
-    {
-        if (musicRoutine != null)
-        {
-            StopCoroutine(musicRoutine);
-            musicRoutine = null;
-        }
-
-        if (musicSource != null)
-        {
-            musicSource.Stop();
-            musicSource.clip = null;
-        }
-
-        musicPool.Clear();
-    }
-
     private void StartLevelMusic()
     {
-        if (musicRoutine != null) StopCoroutine(musicRoutine);
-
         LevelMusic levelMusic = FindAnyObjectByType<LevelMusic>();
         if (levelMusic == null || levelMusic.musicClips.Count == 0) return;
 
@@ -136,25 +104,33 @@ public class AudioManager : MonoBehaviour
 
     public void FadeOutMusic(float duration)
     {
-        if (fadeRoutine != null) StopCoroutine(fadeRoutine);
-        fadeRoutine = StartCoroutine(FadeOutMusicRoutine(duration));
+        StartCoroutine(FadeOutMusicRoutine(duration));
     }
 
     private IEnumerator FadeOutMusicRoutine(float duration)
     {
+        if (musicRoutine != null)
+        {
+            StopCoroutine(musicRoutine);
+            musicRoutine = null;
+        }
+
         float startVolume = musicSource.volume;
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
             musicSource.volume = Mathf.Lerp(startVolume, 0f, elapsed / duration);
             yield return null;
         }
 
         musicSource.volume = 0f;
         musicSource.Stop();
+        musicSource.clip = null;
         musicSource.volume = startVolume;
+
+        musicPool.Clear();
     }
 
     public void PlayUIClick() => PlaySFX(uiClickSound);
@@ -163,6 +139,8 @@ public class AudioManager : MonoBehaviour
     public void PlayRandomCarryDeliver() => PlayRandom(carryTrashDelivers);
     public void PlayGoldenHorn() => PlaySFX(goldenHornPickup);
     public void PlayCannotPickup() => PlaySFX(cannotPickupSound);
+
+    public void PlayFootstep(AudioClip clip) => PlaySFX(clip);
 
     private void PlaySFX(AudioClip clip)
     {
@@ -202,5 +180,18 @@ public class AudioManager : MonoBehaviour
         SetMusicVolume(PlayerPrefs.GetFloat(MUSIC_PREF, DEFAULT_VOLUME));
         SetSFXVolume(PlayerPrefs.GetFloat(SFX_PREF, DEFAULT_VOLUME));
         SetDubbingVolume(PlayerPrefs.GetFloat(DUBBING_PREF, DEFAULT_VOLUME));
+    }
+
+    public AudioMixerGroup GetDubbingGroup()
+    {
+        return dubbingGroup;
+    }
+
+    public void SetVideoAudioSource(AudioSource audioSource)
+    {
+        if (audioSource != null && dubbingGroup != null)
+        {
+            audioSource.outputAudioMixerGroup = dubbingGroup;
+        }
     }
 }

@@ -1,22 +1,3 @@
-//using UnityEngine;
-//using UnityEngine.EventSystems;
-
-//public class AutoSelectFirstButton : MonoBehaviour
-//{
-//    [Header("First Selected")]
-//    [SerializeField] private GameObject firstSelectedButton;
-
-//    private void OnEnable()
-//    {
-//        // Menü her açýldýðýnda ilk butonu seç
-//        if (firstSelectedButton != null)
-//        {
-//            EventSystem.current.SetSelectedGameObject(null);
-//            EventSystem.current.SetSelectedGameObject(firstSelectedButton);
-//        }
-//    }
-//}
-
 using UnityEngine;
 using UnityEngine.EventSystems;
 

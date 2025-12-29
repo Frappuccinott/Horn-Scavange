@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(AudioSource))]
 public class NPCInteraction : MonoBehaviour
@@ -20,6 +21,8 @@ public class NPCInteraction : MonoBehaviour
 
     [Header("Zone Detection")]
     [SerializeField] private string playerTag = "Character";
+
+    [SerializeField] private UnityEvent onDialogueComplete;
 
     private CharacterControls inputActions;
     private InputAction interactAction;
@@ -114,7 +117,9 @@ public class NPCInteraction : MonoBehaviour
             yield return StartCoroutine(MoveCameraToTarget());
 
         SetPlayerMovement(true);
+        onDialogueComplete?.Invoke();
         isPlayingDialogue = false;
+
     }
 
     private IEnumerator MoveCameraToTarget()

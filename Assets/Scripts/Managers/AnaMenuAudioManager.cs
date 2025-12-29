@@ -1,5 +1,4 @@
-//usingusing UnityEngine;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 
 public class AnaMenuAudioManager : MonoBehaviour
@@ -43,7 +42,7 @@ public class AnaMenuAudioManager : MonoBehaviour
     private void Start()
     {
         LoadAudioSettings();
-        PlayMainMenuMusic();
+        PlayMainMenuMusic(); // HER ZAMAN müzik başlar
     }
 
     private void OnDestroy()
@@ -69,8 +68,17 @@ public class AnaMenuAudioManager : MonoBehaviour
     private void PlayMainMenuMusic()
     {
         if (!mainMenuMusic) return;
+
         musicSource.clip = mainMenuMusic;
         musicSource.Play();
+    }
+
+    public void StopMusic()
+    {
+        if (musicSource != null && musicSource.isPlaying)
+        {
+            musicSource.Stop();
+        }
     }
 
     public void PlayUIClick() => PlaySFX(uiClickSound);
