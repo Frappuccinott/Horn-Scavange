@@ -166,9 +166,14 @@ public class FinalVideoManager : MonoBehaviour
             System.Environment.SpecialFolder.MyDocuments
         );
 
-        string path = Path.Combine(documentsPath, "final.txt");
+        string path = Path.Combine(documentsPath, "Message.txt");
 
-        File.WriteAllText(path, "To be continued\n- Scavanges Team");
+        string content =
+    @"Thank you for playing. We love you.
+
+VG8gYmUgY29udGl1bmVk - Scavangers Team";
+
+        File.WriteAllText(path, content);
     }
 
     private void OnDestroy()

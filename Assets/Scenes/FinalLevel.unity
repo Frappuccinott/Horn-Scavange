@@ -7028,7 +7028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FinalScenesManager
   cingan: {fileID: 1386383743}
-  finalVideoClip: {fileID: 32900000, guid: 207bb02482e85e941b50a38a6d5fc5b1, type: 3}
+  finalVideoClip: {fileID: 32900000, guid: 3ab838abadda42c44a36404aa825ea2c, type: 3}
   videoPanel: {fileID: 504934251}
   videoRawImage: {fileID: 690686603}
   fadeCanvasGroup: {fileID: 849982797}
