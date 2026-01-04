@@ -58369,7 +58369,7 @@ MonoBehaviour:
   - {fileID: 1312737456}
   - {fileID: 1679185347}
   - {fileID: 1200380688}
-  cursorSpeed: 400
+  cursorSpeed: 450
   timeLimit: 15
   npcFailZones:
   - {fileID: 2128470520}
