@@ -224,7 +224,7 @@ public class SettingsMenu : MonoBehaviour
 
         if (resolutionDropdown && resolutions != null)
         {
-            int defaultResolution = resolutions.Length - 1; // En yüksek çözünürlük
+            int defaultResolution = resolutions.Length - 1;
             resolutionDropdown.value = defaultResolution;
             SetResolution(defaultResolution);
         }
@@ -237,7 +237,6 @@ public class SettingsMenu : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Listener'ları temizle
         if (musicSlider) musicSlider.onValueChanged.RemoveListener(SetMusicVolume);
         if (sfxSlider) sfxSlider.onValueChanged.RemoveListener(SetSFXVolume);
         if (dubbingSlider) dubbingSlider.onValueChanged.RemoveListener(SetDubbingVolume);
