@@ -6988,6 +6988,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SubtitlePanel
       objectReference: {fileID: 0}
+    - target: {fileID: 5085327762934346908, guid: 0c94b69abf143c346ad7bccac05334e4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -18481,6 +18485,10 @@ PrefabInstance:
     - target: {fileID: 3136048756446891851, guid: d424794071f31914bbdfb02d9ab7f1c5, type: 3}
       propertyPath: m_Name
       value: Interact Text Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3136048756446891851, guid: d424794071f31914bbdfb02d9ab7f1c5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7267835838093976394, guid: d424794071f31914bbdfb02d9ab7f1c5, type: 3}
       propertyPath: m_Pivot.x
