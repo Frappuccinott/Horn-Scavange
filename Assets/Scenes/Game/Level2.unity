@@ -1013,6 +1013,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC2
       objectReference: {fileID: 0}
+    - target: {fileID: 4736287327039114273, guid: a1672f0679e52f2489193578ce3512d7, type: 3}
+      propertyPath: m_SortingOrder
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 5499783047311189497, guid: a1672f0679e52f2489193578ce3512d7, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -4652,11 +4656,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8363236290360221175, guid: d7b2d01e1ab076643ba0f31506e0a68a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.38
+      value: -7.54
       objectReference: {fileID: 0}
     - target: {fileID: 8363236290360221175, guid: d7b2d01e1ab076643ba0f31506e0a68a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11.31
+      value: -14.17
       objectReference: {fileID: 0}
     - target: {fileID: 8363236290360221175, guid: d7b2d01e1ab076643ba0f31506e0a68a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -38761,6 +38765,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC4
       objectReference: {fileID: 0}
+    - target: {fileID: 4736287327039114273, guid: a1672f0679e52f2489193578ce3512d7, type: 3}
+      propertyPath: m_SortingOrder
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 5499783047311189497, guid: a1672f0679e52f2489193578ce3512d7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.86
@@ -42111,6 +42119,10 @@ PrefabInstance:
     - target: {fileID: 1579243565121315927, guid: a1672f0679e52f2489193578ce3512d7, type: 3}
       propertyPath: m_Name
       value: NPC3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736287327039114273, guid: a1672f0679e52f2489193578ce3512d7, type: 3}
+      propertyPath: m_SortingOrder
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5499783047311189497, guid: a1672f0679e52f2489193578ce3512d7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -58851,6 +58863,10 @@ PrefabInstance:
     - target: {fileID: 1579243565121315927, guid: a1672f0679e52f2489193578ce3512d7, type: 3}
       propertyPath: m_Name
       value: NPC1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4736287327039114273, guid: a1672f0679e52f2489193578ce3512d7, type: 3}
+      propertyPath: m_SortingOrder
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5499783047311189497, guid: a1672f0679e52f2489193578ce3512d7, type: 3}
       propertyPath: m_LocalPosition.x
